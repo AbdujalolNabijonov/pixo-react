@@ -14,7 +14,7 @@ const HomePage = (props: any) => {
                     count={10}
                     color="secondary"
                     variant="outlined"
-                    shape="rounded" 
+                    shape="rounded"
                 />
             </Stack>
         </Stack>
