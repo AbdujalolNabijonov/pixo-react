@@ -1,7 +1,8 @@
 .pc-wrapper {
   .navbar-main {
+    position: fixed;
     background-color: black;
-    width: 250px;
+    width: 300px;
     height: 100vh;
     border-right: 1px solid white;
     color: white;
@@ -21,7 +22,6 @@
       padding: 5px;
       margin-bottom: 10px;
       border-radius: 10px;
-      background-color: transparent;
       transition: background-color 0.1s ease-in-out;
       &:hover {
         background-color: #1a1a1a;
@@ -45,6 +45,9 @@
       }
       .on {
         font-weight: 600;
+        background-color: #1a1a1a;
+        width: 100%;
+        border-radius: 10px;
       }
     }
   }

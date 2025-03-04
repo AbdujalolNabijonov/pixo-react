@@ -1,6 +1,6 @@
 import React from "react"
 import { Avatar, Box, MenuItem, Stack } from "@mui/material"
-import { Home, Menu, Search } from "@mui/icons-material"
+import { Home, HomeOutlined, Menu, Search, SearchOutlined } from "@mui/icons-material"
 import { useLocation, useNavigate } from "react-router-dom"
 import { CameraPlus, House } from "@phosphor-icons/react"
 
@@ -26,15 +26,19 @@ const Navbar = () => {
                     <Box className="title">
                         Pixo
                     </Box>
-                    <MenuItem className="menu-item" onClick={() => navigateHandler("/")}>
+                    <MenuItem  className="menu-item" onClick={() => navigateHandler("/")}>
                         <Stack className={routerPath === "/" ? "on menu-select" : "menu-select"}>
-                            <Box><House className={"menu-icon"} /></Box>
+                            <Box>
+                                {routerPath === "/" ? <Home className={"menu-icon"} /> : <HomeOutlined className={"menu-icon"} />}
+                            </Box>
                             <Box>Home</Box>
                         </Stack>
                     </MenuItem>
                     <MenuItem className="menu-item" onClick={() => navigateHandler("/posts")}>
                         <Stack className={routerPath === "/posts" ? "on menu-select" : "menu-select"}>
-                            <Box><Search className="menu-icon" /></Box>
+                            <Box>
+                                {routerPath === "/posts" ? <SearchOutlined className="menu-icon" /> : <Search className="menu-icon" />}
+                            </Box>
                             <Box>Search</Box>
                         </Stack>
                     </MenuItem>

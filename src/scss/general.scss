@@ -1,5 +1,16 @@
-html{
-    margin: 0;
-    padding: 0;
-    font-family: Roboto, Helvetica, Arial, sans-serif;
+body,
+html {
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  scroll-behavior: smooth;
+}
+.pagination {
+  align-self: center;
+  margin: 30px 0;
+}
+.css-xatvkc-MuiButtonBase-root-MuiPaginationItem-root {
+  color: rgb(212, 206, 206) !important;
+  border:1px solid rgb(255, 226, 226);
+  background-color: white;
 }

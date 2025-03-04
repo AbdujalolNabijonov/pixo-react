@@ -1,11 +1,22 @@
-import { Stack } from "@mui/material"
+import { Pagination, Stack } from "@mui/material"
 import BasicLayout from "../../components/layouts/basicLayout"
+import Members from "./members"
+import Posts from "./posts"
 
 const HomePage = (props: any) => {
     return (
         <Stack className="home-page">
-            <h1>This is Home Page</h1>
-            <a href="/posts">Posts</a>
+            <Stack className="container">
+                <Members />
+                <Posts />
+                <Pagination
+                    className="pagination"
+                    count={10}
+                    color="secondary"
+                    variant="outlined"
+                    shape="rounded" 
+                />
+            </Stack>
         </Stack>
     )
 }
