@@ -1,0 +1,51 @@
+.pc-wrapper {
+  .navbar-main {
+    background-color: black;
+    width: 250px;
+    height: 100vh;
+    border-right: 1px solid white;
+    color: white;
+    padding: 15px;
+    justify-content: space-between;
+    .navbar-items {
+      .title {
+        font-size: 30px;
+        font-family: "Playwrite IT Moderna", cursive;
+        letter-spacing: 3px;
+        font-weight: bold;
+        padding: 10px;
+        margin-bottom: 10px;
+      }
+    }
+    .menu-item {
+      padding: 5px;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      background-color: transparent;
+      transition: background-color 0.1s ease-in-out;
+      &:hover {
+        background-color: #1a1a1a;
+      }
+      .menu-select {
+        padding: 5px;
+        display: flex;
+        flex-direction: row;
+        text-decoration: none;
+        color: white;
+        gap: 10px;
+        font-size: 20px;
+        align-items: start;
+        .menu-icon {
+          height: 30px;
+          width: 30px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+      .on {
+        font-weight: 600;
+      }
+    }
+  }
+}

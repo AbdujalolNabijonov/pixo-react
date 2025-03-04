@@ -1,10 +1,21 @@
 import React from 'react';
+import HomePage from './screen/homePage';
+import PostPage from './screen/postPage';
+import MemberPage from './screen/memberPage';
+import { Route, Routes } from 'react-router-dom';
+import "./scss/mobile/main.scss"
+import "./scss/pc/main.scss"
+import "./scss/general.scss"
 
 function App() {
   return (
-    <h1>
-      Hello World
-    </h1>
+    <>
+      <Routes>
+        <Route path='/posts' element={<PostPage />} />
+        <Route path='/memberpage' element={<MemberPage />} />
+        <Route path='/' element={<HomePage />} />
+      </Routes>
+    </>
   );
 }
 
