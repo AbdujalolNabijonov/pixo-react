@@ -1,11 +1,17 @@
 import React, { useCallback, useState } from "react";
 import { Box, Button, Checkbox, FormControlLabel, FormGroup, IconButton, Modal, Stack } from "@mui/material";
 import { RemoveRedEyeRounded, VisibilityOffRounded } from "@mui/icons-material";
+import { Message } from "../../libs/Message";
+import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../libs/sweetAlert";
+import MemberService from "../../service api/Member.service";
+import { AuthModalProps } from "../../libs/types/props";
 
 
-const AuthenticateModal = (props: any) => {
+
+const AuthenticateModal = (props: AuthModalProps) => {
     //Initilizations
     const device: string = "desktop"
+    const { setOpenRegister, registerToggleHandler, openRegister } = props
     const [signupObj, setSignupObj] = useState({ memberNick: '', memberPhone: '', memberPassword: '', })
     const [loginObj, setLoginObj] = useState({ memberNick: '', memberPassword: '' });
     const [signIn, toggle] = React.useState(true);
@@ -15,10 +21,23 @@ const AuthenticateModal = (props: any) => {
 
     //Handlers
     const handleSignUpRequest = async () => {
-        console.log(signupObj)
+        try {
+        } catch (err: any) {
+            await sweetErrorHandling(err)
+        }
     }
-    const handleLogInRequest = () => {
-        console.log(loginObj)
+    const handleLogInRequest = async () => {
+        try {
+            if (loginObj.memberNick === "" || loginObj.memberPassword === "") {
+                throw new Error(Message.FULL_FILL_INPUTS)
+            }
+            const memberService = new MemberService()
+            await memberService.loginRequest(loginObj);
+            await sweetTopSmallSuccessAlert(Message.SUCCESS_LOGIN)
+            setOpenRegister(false)
+        } catch (err: any) {
+            await sweetErrorHandling(err)
+        }
     }
     const handleKeyDownSignUp = (e: any) => {
         if (e.key == "Enter") {
@@ -45,8 +64,8 @@ const AuthenticateModal = (props: any) => {
     }
     return (
         <Modal
-            open={props.openRegister}
-            onClose={props.registerToggleHandler}
+            open={openRegister}
+            onClose={registerToggleHandler}
             className="auth-modal"
         >
             <Stack className="join-auth">

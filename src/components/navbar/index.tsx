@@ -109,7 +109,11 @@ const Navbar = () => {
                         </Stack>
                     </ExtraMenu>
                 </MenuItem>
-                <AuthenticationModal registerToggleHandler={registerToggleHandler} openRegister={openRegister} />
+                <AuthenticationModal
+                    registerToggleHandler={registerToggleHandler}
+                    openRegister={openRegister}
+                    setOpenRegister={setOpenRegister}
+                />
             </Stack >
         )
     }
