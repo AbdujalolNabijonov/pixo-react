@@ -8,9 +8,27 @@ html {
 .pagination {
   align-self: center;
   margin: 30px 0;
+  .css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root{
+    color: white;
+  }
+  .css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected{
+    border-color: white;
+    color: white;
+  }
 }
-.css-xatvkc-MuiButtonBase-root-MuiPaginationItem-root {
-  color: rgb(212, 206, 206) !important;
-  border:1px solid rgb(255, 226, 226);
-  background-color: white;
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

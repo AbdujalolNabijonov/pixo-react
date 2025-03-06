@@ -1,14 +1,21 @@
-import React from "react"
+import React, { useState } from "react"
 import { Avatar, Box, MenuItem, Stack } from "@mui/material"
 import { Home, HomeOutlined, Menu, Search, SearchOutlined, Subscript, Subscriptions, SubscriptionsOutlined, SubscriptOutlined } from "@mui/icons-material"
 import { useLocation, useNavigate } from "react-router-dom"
 import { CameraPlus, House } from "@phosphor-icons/react"
+import CreatePost from "../others/createPost"
 
 
 const Navbar = () => {
     const device: string = "desktop"
     const navigate = useNavigate()
     const routerPath = useLocation().pathname
+
+    const [showModal, setShowModal] = useState(false)
+
+    const modalCloseHandler = () => {
+        setShowModal(!showModal)
+    }
 
     const navigateHandler = (path: string) => {
         navigate(path)
@@ -26,7 +33,7 @@ const Navbar = () => {
                     <Box className="title">
                         Pixo
                     </Box>
-                    <MenuItem  className="menu-item" onClick={() => navigateHandler("/")}>
+                    <MenuItem className="menu-item" onClick={() => navigateHandler("/")}>
                         <Stack className={routerPath === "/" ? "on menu-select" : "menu-select"}>
                             <Box>
                                 {routerPath === "/" ? <Home className={"menu-icon"} /> : <HomeOutlined className={"menu-icon"} />}
@@ -42,7 +49,7 @@ const Navbar = () => {
                             <Box>Explore</Box>
                         </Stack>
                     </MenuItem>
-                    <MenuItem className="menu-item" >
+                    <MenuItem className="menu-item" onClick={modalCloseHandler}>
                         <Stack className={"menu-select"}>
                             <Box><CameraPlus className="menu-icon" /></Box>
                             <Box>Create</Box>
@@ -54,6 +61,7 @@ const Navbar = () => {
                             <Box>Profile</Box>
                         </Stack>
                     </MenuItem>
+                    <CreatePost showModal={showModal} modalCloseHandler={modalCloseHandler} />
                 </Stack>
                 <MenuItem className="menu-item">
                     <Stack className={"menu-select"}>
