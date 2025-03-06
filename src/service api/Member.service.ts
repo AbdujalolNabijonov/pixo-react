@@ -41,7 +41,7 @@ class MemberService {
             const members = response.data.value;
             return members
         } catch (err: any) {
-            console.log(`ERROR: signupRequest, ${err.response.data.message}`)
+            console.log(`ERROR: signupRequest, ${err.response.data?.message}`)
             throw err.response.data
         }
     }

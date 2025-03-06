@@ -6,6 +6,7 @@ import { Route, Routes } from 'react-router-dom';
 import "swiper/css"
 import "swiper/css/navigation"
 import "./scss/mobile/main.scss"
+import 'swiper/css/pagination';
 import "./scss/pc/main.scss"
 import "./scss/general.scss"
 
