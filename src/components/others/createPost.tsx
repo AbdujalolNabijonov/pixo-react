@@ -8,10 +8,12 @@ import { ArrowSquareOut } from "@phosphor-icons/react"
 const CreatePost = (props: any) => {
     const { modalCloseHandler, showModal } = props
     const [file, setFile] = useState()
+    const [imageUrl, setImageUrl] = useState<string>("")
     const fileTypes = ["JPG", "PNG", "JPEG"]
 
     const handleChange = (file: any) => {
         setFile(file)
+        setImageUrl(URL.createObjectURL(file))
     }
     return (
         <Stack>
@@ -30,12 +32,12 @@ const CreatePost = (props: any) => {
                         </FormControl>
                         <FormControl>
                             <FormLabel className="post-label">Content</FormLabel>
-                            <Textarea minRows={5} placeholder="add content..."/>
+                            <Textarea minRows={5} placeholder="add content..." />
                         </FormControl>
                     </CssVarsProvider>
                     <Stack className="image-upload">
                         <Box className="pre-view">
-                            <img src="/imgs/tree.jpeg" alt="" />
+                            <img src={imageUrl ? imageUrl : "/imgs/tree.jpeg"} alt="" />
                         </Box>
                         <FileUploader
                             handleChange={handleChange}
