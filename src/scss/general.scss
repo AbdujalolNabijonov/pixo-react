@@ -8,12 +8,51 @@ html {
 .pagination {
   align-self: center;
   margin: 30px 0;
-  .css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root{
+  .css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root {
     color: white;
   }
-  .css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected{
+  .css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
     border-color: white;
     color: white;
+  }
+}
+
+.extra-menu {
+  width: 300px;
+  padding: 0;
+  bottom: 40px;
+  .MuiPaper-root {
+    left: 5px !important;
+  }
+  .css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper {
+    border-radius: 15px;
+    background-color: #262626;
+  }
+  .MuiList-root {
+    padding: 0;
+    border-radius: 10px;
+  }
+  .menu-items {
+    background-color: #262626;
+    padding: 10px;
+    border-radius: 10px;
+
+    .menu-item {
+      width: 250px;
+      border-radius: 10px;
+      padding: 10px;
+      &:hover {
+        background-color: #555;
+      }
+      .menu-item-icon {
+        flex-direction: row;
+        gap: 10px;
+        font-size: 14px;
+        color: white;
+        letter-spacing: 1px;
+        align-items: center;
+      }
+    }
   }
 }
 

@@ -1,0 +1,264 @@
+.auth-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .authMain {
+    height: auto;
+    background: #262626;
+    position: relative;
+    width: 1000px;
+    border-radius: 10px;
+    .auth-overlay {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      opacity: 0.9;
+    }
+    .auth_container {
+      .auth_signUp {
+        .signUp_body {
+          color: white;
+          input {
+            border-radius: 5px;
+            padding: 5px 10px;
+            font-size: 17px;
+          }
+          .login_title {
+            font-weight: bold;
+            font-size: 30px;
+          }
+          .login-btn {
+            width: 100%;
+            cursor: pointer;
+            padding: 10px 15px;
+            font-size: 17px;
+            border-radius: 5px;
+            background-color: #eb6753;
+            border: none;
+            color: white;
+            letter-spacing: 1px;
+          }
+        }
+      }
+      .auth_logIn {
+        .logIn_body {
+          color: white;
+          .title {
+            font-weight: bold;
+            font-size: 35px;
+          }
+          input {
+            border-radius: 5px;
+            padding: 5px 10px;
+            font-size: 17px;
+            width: 300px;
+          }
+          .warn {
+            font-size: 14px;
+            margin: 10px 0;
+          }
+          .form-floating {
+            position: relative;
+            flex-direction: row;
+            .password-visible {
+              position: absolute;
+              right: 20px;
+              height: 30px;
+              width: 20px;
+              border-radius: 50%;
+              top: 12px;
+              color: gray;
+            }
+          }
+          .sign-btn {
+            width: 100%;
+            cursor: pointer;
+            padding: 10px 15px;
+            letter-spacing: 1px;
+            font-size: 17px;
+            border-radius: 5px;
+            background-color: #eb6753;
+            border: none;
+            color: white;
+          }
+        }
+      }
+    }
+  }
+  .auth_container {
+    border-radius: 20px;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 100%;
+    min-height: 450px;
+  }
+
+  .auth_signUp {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    transition: all 0.6s ease-in-out;
+    left: 0;
+    width: 50%;
+    opacity: 0;
+    z-index: 1;
+  }
+
+  .auth_logIn {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    transition: all 0.6s ease-in-out;
+    left: 0;
+    width: 50%;
+    z-index: 2;
+  }
+
+  .signUp_body,
+  .logIn_body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 50px;
+    height: 100%;
+    text-align: center;
+  }
+
+  .signUp_body input {
+    background-color: #eee;
+    border: none;
+    padding: 12px 15px;
+    margin: 8px 0;
+    width: 100%;
+  }
+
+  .logIn_body {
+    input {
+      background-color: #eee;
+      border: none;
+      padding: 12px 15px;
+      margin: 8px 0;
+      width: 100%;
+    }
+  }
+
+  .auth_anchor {
+    color: #333;
+    font-size: 14px;
+    text-decoration: none;
+    margin: 15px 0;
+  }
+
+  .auth_overlay {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    transition: transform 0.6s ease-in-out;
+    z-index: 100;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    .overlay_body {
+      position: relative;
+      color: #ffffff;
+      height: 100%;
+      width: 200%;
+      transform: translateX(0);
+      transition: transform 0.6s ease-in-out;
+      .overlay {
+        position: relative;
+        width: 400px;
+        height: 150px;
+        bottom: 10px;
+        left: 50px;
+        .overlay_panel {
+          position: absolute;
+          display: flex;
+          padding: 10px;
+          border-radius: 0 20px 0 20px;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          text-align: center;
+          transform: translateX(0);
+          transition: transform 0.6s ease-in-out;
+          background-color: transparent;
+          color: black;
+          .left_overlay_title {
+            font-size: 25px;
+            font-weight: bold;
+          }
+          button {
+            padding: 5px 15px;
+            background-color: #7c7b7b;
+            border-radius: 5px;
+            font-size: 15px;
+            margin-top: 10px;
+            font-size: 16x;
+            cursor: pointer;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: black;
+          }
+        }
+        .overlay-wrapper {
+          position: absolute;
+          border-radius: 0 20px 0 20px;
+          height: 100%;
+          width: 100%;
+          background-color: gray;
+          opacity: 0.7;
+          z-index: -1;
+        }
+      }
+      .righ_overlay {
+        position: absolute;
+        display: flex;
+        right: 10px;
+        top: 31%;
+        .overlay_panel {
+          position: relative;
+          background-color: transparent;
+          padding: 10px;
+          border-radius: 20px 0 20px 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          z-index: 99;
+          color: black;
+          .right_overlay_title {
+            font-size: 25px;
+            font-weight: bold;
+          }
+          button {
+            padding: 5px 15px;
+            background-color: #706d6d;
+            border-radius: 5px;
+            font-size: 15px;
+            color: black;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-top: 10px;
+            font-size: 16x;
+            cursor: pointer;
+          }
+        }
+        .overlay-wrapper {
+          position: absolute;
+          border-radius: 20px 0 20px 0;
+          height: 100%;
+          width: 100%;
+          background-color: gray;
+          opacity: 0.7;
+          z-index: -1;
+        }
+      }
+    }
+  }
+}

@@ -1,16 +1,18 @@
 import React, { useState } from "react"
-import { Avatar, Box, MenuItem, Stack } from "@mui/material"
-import { Home, HomeOutlined, Menu, Search, SearchOutlined, Subscript, Subscriptions, SubscriptionsOutlined, SubscriptOutlined } from "@mui/icons-material"
+import { Avatar, Box, MenuItem, Stack, Menu as ExtraMenu, Divider } from "@mui/material"
+import { Home, HomeOutlined, Menu, RecommendOutlined, Settings, Subscriptions, SubscriptionsOutlined } from "@mui/icons-material"
 import { useLocation, useNavigate } from "react-router-dom"
-import { CameraPlus, House } from "@phosphor-icons/react"
+import { CameraPlus, } from "@phosphor-icons/react"
 import CreatePost from "../others/createPost"
+import AuthenticationModal from "../others/register"
 
 
 const Navbar = () => {
     const device: string = "desktop"
     const navigate = useNavigate()
     const routerPath = useLocation().pathname
-
+    const [showExtraMenu, setShowExtraMenu] = useState<boolean>(false)
+    const [openRegister, setOpenRegister] = useState(false)
     const [showModal, setShowModal] = useState(false)
 
     const modalCloseHandler = () => {
@@ -19,6 +21,13 @@ const Navbar = () => {
 
     const navigateHandler = (path: string) => {
         navigate(path)
+    }
+
+    const toggleExtraMenu = (e: any) => {
+        setShowExtraMenu(!showExtraMenu)
+    }
+    const registerToggleHandler = (e: any) => {
+        setOpenRegister(!openRegister)
     }
     if (device === "mobile") {
         return (
@@ -63,13 +72,45 @@ const Navbar = () => {
                     </MenuItem>
                     <CreatePost showModal={showModal} modalCloseHandler={modalCloseHandler} />
                 </Stack>
-                <MenuItem className="menu-item">
+                <MenuItem className="menu-item" onClick={toggleExtraMenu} >
                     <Stack className={"menu-select"}>
                         <Box><Menu className="menu-icon" /></Box>
                         <Box>More</Box>
                     </Stack>
+                    <ExtraMenu
+                        className="extra-menu"
+                        open={Boolean(showExtraMenu)}
+                        onClose={toggleExtraMenu}
+                    >
+                        <Stack className="menu-items">
+                            <MenuItem className="menu-item">
+                                <Stack className="menu-item-icon">
+                                    <Settings />
+                                    <Box>Settings</Box>
+                                </Stack>
+                            </MenuItem>
+                            <MenuItem className="menu-item">
+                                <Stack className="menu-item-icon">
+                                    <RecommendOutlined />
+                                    <Box>Likes</Box>
+                                </Stack>
+                            </MenuItem>
+                            <Divider sx={{ borderColor: 'white' }} />
+                            <MenuItem className="menu-item" onClick={registerToggleHandler}>
+                                <Stack className="menu-item-icon">
+                                    <Box>Register</Box>
+                                </Stack>
+                            </MenuItem>
+                            <MenuItem className="menu-item">
+                                <Stack className="menu-item-icon">
+                                    <Box>Log Out</Box>
+                                </Stack>
+                            </MenuItem>
+                        </Stack>
+                    </ExtraMenu>
                 </MenuItem>
-            </Stack>
+                <AuthenticationModal registerToggleHandler={registerToggleHandler} openRegister={openRegister} />
+            </Stack >
         )
     }
 }
