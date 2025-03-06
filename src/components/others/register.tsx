@@ -22,7 +22,23 @@ const AuthenticateModal = (props: AuthModalProps) => {
     //Handlers
     const handleSignUpRequest = async () => {
         try {
+            if (
+                signupObj.memberNick === "" ||
+                signupObj.memberPassword === "" ||
+                signupObj.memberPhone === "" ||
+                checkPassword === ""
+            ) {
+                throw new Error(Message.FULL_FILL_INPUTS);
+            }
+            if (signupObj.memberPassword !== checkPassword) {
+                throw new Error(Message.PASSWORD_NOT_MATCH)
+            }
+            const memberService = new MemberService()
+            await memberService.signupRequest(signupObj)
+            await sweetTopSmallSuccessAlert(Message.SUCCESS_AUTH)
+            setOpenRegister(false)
         } catch (err: any) {
+            setOpenRegister(false)
             await sweetErrorHandling(err)
         }
     }
@@ -33,9 +49,10 @@ const AuthenticateModal = (props: AuthModalProps) => {
             }
             const memberService = new MemberService()
             await memberService.loginRequest(loginObj);
-            await sweetTopSmallSuccessAlert(Message.SUCCESS_LOGIN)
+            await sweetTopSmallSuccessAlert(Message.SUCCESS_AUTH)
             setOpenRegister(false)
         } catch (err: any) {
+            setOpenRegister(false)
             await sweetErrorHandling(err)
         }
     }
@@ -102,7 +119,13 @@ const AuthenticateModal = (props: AuthModalProps) => {
                                     onKeyDown={handleKeyDownSignUp}
                                     onChange={(e) => { setCheckPassword(e.target.value) }}
                                 />
-                                <Button className={"login-btn"} onClick={handleSignUpRequest} >Sign Up</Button>
+                                <Button
+                                    className={"login-btn"}
+                                    onClick={handleSignUpRequest}
+                                    onKeyDown={handleKeyDownSignUp}
+                                >
+                                    Sign Up
+                                </Button>
                                 {
                                     device === "mobile" ? (
                                         <Box sx={{ marginTop: "20px" }} onClick={() => toggle(true)}>

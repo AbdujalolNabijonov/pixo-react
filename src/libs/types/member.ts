@@ -5,6 +5,12 @@ export interface LoginInput {
     memberPassword: string
 }
 
+export interface SignupInput {
+    memberNick: string;
+    memberPassword: string
+    memberPhone: string
+}
+
 export interface Member {
     _id: string
     memberType: MemberType
