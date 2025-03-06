@@ -1,6 +1,8 @@
 import { Box, Stack } from "@mui/material"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Navigation } from "swiper/modules"
+import { Member } from "../../libs/types/member"
+import { serverApi } from "../../libs/config"
 
 const Members = (props: any) => {
     return (
@@ -12,18 +14,21 @@ const Members = (props: any) => {
                 navigation={true}
             >
                 {
-                    Array.from({ length: 10 }).map((key, index: number) => (
-                        <SwiperSlide className="member" key={index}>
-                            <Box className="member-image">
-                                <Box className="image-wrapper">
-                                    <img src="/imgs/man.jpg" alt="" />
+                    props.members.map((member: Member, index: number) => {
+                        const imageUrl = member.memberImage ? `${member.memberImage}` : "/imgs/default-user.jpg"
+                        return (
+                            <SwiperSlide className="member" key={index}>
+                                <Box className="member-image">
+                                    <Box className="image-wrapper">
+                                        <img src={imageUrl} alt={member.memberNick} />
+                                    </Box>
                                 </Box>
-                            </Box>
-                            <Box className="member-name">
-                                Martin
-                            </Box>
-                        </SwiperSlide>
-                    ))
+                                <Box className="member-name">
+                                    {member.memberNick}
+                                </Box>
+                            </SwiperSlide>
+                        )
+                    })
                 }
             </Swiper>
         </Stack>

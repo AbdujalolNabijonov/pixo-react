@@ -24,3 +24,12 @@ export interface Member {
     createdAt: Date
     updatedAt: Date
 }
+
+export interface Members {
+    list: Member[];
+    metaCounter: MetaCounter[]
+}
+
+export interface MetaCounter {
+    total: number
+}

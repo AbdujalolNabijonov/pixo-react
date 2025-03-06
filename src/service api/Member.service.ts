@@ -1,5 +1,5 @@
 import axios from "axios"
-import { LoginInput, Member, SignupInput } from "../libs/types/member"
+import { LoginInput, Member, Members, SignupInput } from "../libs/types/member"
 import { serverApi } from "../libs/config"
 
 class MemberService {
@@ -28,6 +28,18 @@ class MemberService {
             const member = response.data.value;
             localStorage.setItem("member", JSON.stringify(member));
             return member
+        } catch (err: any) {
+            console.log(`ERROR: signupRequest, ${err.response.data.message}`)
+            throw err.response.data
+        }
+    }
+
+    public async getMembers(): Promise<Members> {
+        try {
+            const url = `${this.server}/member/members`;
+            const response = await axios.get(url, { withCredentials: true });
+            const members = response.data.value;
+            return members
         } catch (err: any) {
             console.log(`ERROR: signupRequest, ${err.response.data.message}`)
             throw err.response.data
