@@ -5,6 +5,9 @@ import { useLocation, useNavigate } from "react-router-dom"
 import { CameraPlus, } from "@phosphor-icons/react"
 import CreatePost from "../others/createPost"
 import AuthenticationModal from "../others/register"
+import useGlobal from "../../libs/hooks/useGlobal"
+import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../libs/sweetAlert"
+import MemberService from "../../service api/Member.service"
 
 
 const Navbar = () => {
@@ -14,6 +17,7 @@ const Navbar = () => {
     const [showExtraMenu, setShowExtraMenu] = useState<boolean>(false)
     const [openRegister, setOpenRegister] = useState(false)
     const [showModal, setShowModal] = useState(false)
+    const { member } = useGlobal()
 
     const modalCloseHandler = () => {
         setShowModal(!showModal)
@@ -28,6 +32,15 @@ const Navbar = () => {
     }
     const registerToggleHandler = (e: any) => {
         setOpenRegister(!openRegister)
+    }
+    const logoutRequestHandler = async () => {
+        try {
+            const memberService = new MemberService();
+            await memberService.logout()
+            await sweetTopSmallSuccessAlert("Successfully log out", 1000, true)
+        } catch (err: any) {
+            await sweetErrorHandling(err)
+        }
     }
     if (device === "mobile") {
         return (
@@ -64,12 +77,16 @@ const Navbar = () => {
                             <Box>Create</Box>
                         </Stack>
                     </MenuItem>
-                    <MenuItem className="menu-item" onClick={() => navigateHandler("/memberpage")}>
-                        <Stack className={routerPath === "/memberpage" ? "on menu-select" : "menu-select"}>
-                            <Box><Avatar className="menu-icon" /></Box>
-                            <Box>Profile</Box>
-                        </Stack>
-                    </MenuItem>
+                    {
+                        member?._id ? (
+                            <MenuItem className="menu-item" onClick={() => navigateHandler("/memberpage")}>
+                                <Stack className={routerPath === "/memberpage" ? "on menu-select" : "menu-select"}>
+                                    <Box><Avatar src={member?.memberImage ? member.memberImage : "/imgs/default-user.jpg"} className="menu-icon" /></Box>
+                                    <Box>Profile</Box>
+                                </Stack>
+                            </MenuItem>
+                        ) : null
+                    }
                     <CreatePost showModal={showModal} modalCloseHandler={modalCloseHandler} />
                 </Stack>
                 <MenuItem className="menu-item" onClick={toggleExtraMenu} >
@@ -96,16 +113,24 @@ const Navbar = () => {
                                 </Stack>
                             </MenuItem>
                             <Divider sx={{ borderColor: 'white' }} />
-                            <MenuItem className="menu-item" onClick={registerToggleHandler}>
-                                <Stack className="menu-item-icon">
-                                    <Box>Register</Box>
-                                </Stack>
-                            </MenuItem>
-                            <MenuItem className="menu-item">
-                                <Stack className="menu-item-icon">
-                                    <Box>Log Out</Box>
-                                </Stack>
-                            </MenuItem>
+                            {
+                                member?._id ? null : (
+                                    <MenuItem className="menu-item" onClick={registerToggleHandler}>
+                                        <Stack className="menu-item-icon">
+                                            <Box>Register</Box>
+                                        </Stack>
+                                    </MenuItem>
+                                )
+                            }
+                            {
+                                member?._id ? (
+                                    <MenuItem className="menu-item" onClick={logoutRequestHandler}>
+                                        <Stack className="menu-item-icon">
+                                            <Box>Log Out</Box>
+                                        </Stack>
+                                    </MenuItem>
+                                ) : null
+                            }
                         </Stack>
                     </ExtraMenu>
                 </MenuItem>

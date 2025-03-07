@@ -8,10 +8,12 @@ import { Swiper, SwiperSlide } from "swiper/react"
 import { Pagination as SPagination } from "swiper/modules"
 import moment from "moment"
 import useGlobal from "../../libs/hooks/useGlobal"
+import Comments from "../../components/others/comments"
 
 const Posts = (props: any) => {
     const [posts, setPosts] = useState<Post[]>([])
     const [totalPost, setTotalPost] = useState<number>(0)
+    const [opeenModal, setOpenModal] = useState<boolean>(false)
     const [searchObj, setSearchObj] = useState<PostsInquiry>({
         page: 1,
         limit: 10,
@@ -34,7 +36,9 @@ const Posts = (props: any) => {
         searchObj.page = page;
         setSearchObj({ ...searchObj })
     }
-
+    const toggleCommentModal = () => {
+        setOpenModal(!opeenModal)
+    }
     return (
         <Stack className="posts">
             {
@@ -61,7 +65,7 @@ const Posts = (props: any) => {
                                     <Swiper
                                         slidesPerView={1}
                                         modules={[SPagination]}
-                                        pagination={true}
+                                        pagination={{ clickable: true }}
                                         className="image-swiper"
                                     >
                                         {post.postImages.map((image: string) => (
@@ -74,14 +78,14 @@ const Posts = (props: any) => {
                                 </Stack>
                                 <Stack className="post-footer">
                                     <Stack className="post-stats">
-                                        <Stack className="post-stats-item">
+                                        <Button className="post-stats-item">
                                             <FavoriteOutlined />
                                             <Box>{post.postLikes}</Box>
-                                        </Stack>
-                                        <Stack className="post-stats-item">
-                                            <QuestionAnswerOutlined />
+                                        </Button>
+                                        <Button className="post-stats-item" onClick={toggleCommentModal}>
+                                            <QuestionAnswerOutlined sx={{color:"white"}}/>
                                             <Box>{post.postComments}</Box>
-                                        </Stack>
+                                        </Button>
                                     </Stack>
                                     {
                                         post.postTitle ? (
@@ -126,6 +130,7 @@ const Posts = (props: any) => {
                         />
                     )
             }
+                                                    <Comments openComment={opeenModal} toggleCommentModal={toggleCommentModal} />
         </Stack>
     )
 }

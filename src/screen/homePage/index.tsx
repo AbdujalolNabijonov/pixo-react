@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material"
+import { Box, Stack } from "@mui/material"
 import BasicLayout from "../../components/layouts/basicLayout"
 import Members from "./members"
 import Posts from "./posts"

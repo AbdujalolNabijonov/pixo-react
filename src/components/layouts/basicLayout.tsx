@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material"
+import { Box, Stack } from "@mui/material"
 import React from "react"
 import Navbar from "../navbar"
 import Lifter from "../others/lifter"
@@ -15,7 +15,7 @@ const BasicLayout = (Component: React.FC) => {
             )
         } else {
             return (
-                <Stack className="pc-wrapper" flexDirection={'row'}>
+                <Stack className="pc-wrapper" flexDirection={"row"}>
                     <Navbar />
                     <Component />
                     <Lifter />
