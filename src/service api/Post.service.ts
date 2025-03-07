@@ -1,6 +1,6 @@
 import axios from "axios";
 import { serverApi } from "../libs/config";
-import { Posts, PostsInquiry } from "../libs/types/post";
+import { Post, Posts, PostsInquiry } from "../libs/types/post";
 
 class PostService {
     serverApi
@@ -15,6 +15,20 @@ class PostService {
             return response.data.value
         } catch (err: any) {
             console.log(`Error: getPosts, ${err.response.data?.message}`)
+            throw err.response.data
+        }
+    }
+
+    public async createPost(formData: any): Promise<Post> {
+        try {
+            const url = `${this.serverApi}/post/createpost`
+            const response = await axios.post(url, formData, {
+                withCredentials: true,
+                headers: { "Content-Type": "multipart/form-data" }
+            })
+            return response.data.value
+        } catch (err: any) {
+            console.log(`Error: createPost, ${err.response.data.message}`)
             throw err.response.data
         }
     }

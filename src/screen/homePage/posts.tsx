@@ -7,6 +7,7 @@ import { sweetErrorHandling } from "../../libs/sweetAlert"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Pagination as SPagination } from "swiper/modules"
 import moment from "moment"
+import useGlobal from "../../libs/hooks/useGlobal"
 
 const Posts = (props: any) => {
     const [posts, setPosts] = useState<Post[]>([])
@@ -18,7 +19,7 @@ const Posts = (props: any) => {
         direction: -1,
         search: {}
     })
-
+    const { rebuild } = useGlobal()
     useEffect(() => {
         const postService = new PostService();
         postService.getPosts(searchObj).then((posts: PostList) => {
@@ -27,7 +28,7 @@ const Posts = (props: any) => {
         }).catch(err => {
             sweetErrorHandling(err).then()
         })
-    }, [])
+    }, [rebuild])
 
     const paginationHandler = (e: any, page: number) => {
         searchObj.page = page;

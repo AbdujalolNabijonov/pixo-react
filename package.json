@@ -31,6 +31,7 @@
     "sweetalert2": "^11.17.2",
     "swiper": "^11.2.5",
     "typescript": "^4.9.5",
+    "universal-cookie": "^7.2.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -63,6 +64,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/axios": "^0.14.4",
-    "@types/react-router-dom": "^5.3.3"
+    "@types/react-router-dom": "^5.3.3",
+    "@types/universal-cookie": "^3.0.0"
   }
 }

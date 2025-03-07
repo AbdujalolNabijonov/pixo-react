@@ -35,7 +35,7 @@ const AuthenticateModal = (props: AuthModalProps) => {
             }
             const memberService = new MemberService()
             await memberService.signupRequest(signupObj)
-            await sweetTopSmallSuccessAlert(Message.SUCCESS_AUTH)
+            await sweetTopSmallSuccessAlert(Message.SUCCESS_AUTH, 1000, true)
             setOpenRegister(false)
         } catch (err: any) {
             setOpenRegister(false)

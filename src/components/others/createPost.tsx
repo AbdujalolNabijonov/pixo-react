@@ -4,16 +4,57 @@ import { FileUploader } from "react-drag-drop-files"
 import { useState } from "react"
 import { CloudUploadRounded } from "@mui/icons-material"
 import { ArrowSquareOut } from "@phosphor-icons/react"
+import { sweetConfirmAlert, sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../libs/sweetAlert"
+import { Message } from "../../libs/Message"
+import PostService from "../../service api/Post.service"
+import useGlobal from "../../libs/hooks/useGlobal"
+
 
 const CreatePost = (props: any) => {
     const { modalCloseHandler, showModal } = props
-    const [file, setFile] = useState()
-    const [imageUrl, setImageUrl] = useState<string>("")
+    const [files, setFiles] = useState<any[]>([])
+    const [imageUrls, setImageUrls] = useState<string[]>([])
     const fileTypes = ["JPG", "PNG", "JPEG"]
+    const [postTitle, setPostTitle] = useState("")
+    const [postContent, setPostContent] = useState("")
+    const { member,setRebuild } = useGlobal()
 
-    const handleChange = (file: any) => {
-        setFile(file)
-        setImageUrl(URL.createObjectURL(file))
+
+    const createRequestHandler = async () => {
+        try {
+            if (!member?._id) throw new Error(Message.AUTHENTICATE_FIRST)
+            if (files.length < 1) throw new Error(Message.IMAGE_LIMIT)
+            const postService = new PostService()
+            const formData = new FormData();
+            if (postTitle) formData.append("postTitle", postTitle)
+            if (postContent) formData.append("postContent", postContent)
+            files.forEach((file) => {
+                formData.append("postImages", file);
+            });
+            await postService.createPost(formData);
+            setFiles([])
+            setPostTitle("")
+            setPostContent("")
+            setImageUrls([])
+            modalCloseHandler()
+            await sweetTopSmallSuccessAlert(Message.POST_CREATED)
+            setRebuild(new Date())
+        } catch (err: any) {
+            modalCloseHandler()
+            await sweetErrorHandling(err)
+        }
+    }
+
+    const handleChange = async (files: any) => {
+        try {
+            const filesArray = Object.values(files)
+            if (filesArray.length > 5 || filesArray.length < 1) throw new Error(Message.IMAGE_LIMIT)
+            setFiles(filesArray)
+            setImageUrls(filesArray.map((file: any) => URL.createObjectURL(file)))
+        } catch (err: any) {
+            modalCloseHandler()
+            await sweetErrorHandling(err)
+        }
     }
     return (
         <Stack>
@@ -28,22 +69,20 @@ const CreatePost = (props: any) => {
                     <CssVarsProvider>
                         <FormControl>
                             <FormLabel className="post-label">Post Title</FormLabel>
-                            <Input placeholder="Insert title" />
+                            <Input placeholder="Insert title" onChange={(e: any) => setPostTitle(e.target.value)} />
                         </FormControl>
                         <FormControl>
                             <FormLabel className="post-label">Content</FormLabel>
-                            <Textarea minRows={5} placeholder="add content..." />
+                            <Textarea minRows={5} placeholder="add content..." onChange={(e: any) => setPostContent(e.target.value)} />
                         </FormControl>
                     </CssVarsProvider>
                     <Stack className="image-upload">
-                        <Box className="pre-view">
-                            <img src={imageUrl ? imageUrl : "/imgs/tree.jpeg"} alt="" />
-                        </Box>
                         <FileUploader
                             handleChange={handleChange}
                             name="file"
                             types={fileTypes}
                             classes="file-drop"
+                            multiple={true}
                         >
                             <CloudUploadRounded />
                             <Box>Drag and Drop images here</Box>
@@ -52,11 +91,20 @@ const CreatePost = (props: any) => {
                             </Button>
                         </FileUploader>
                     </Stack>
-                    <Button variant="contained" color="warning">Create</Button>
+                    <Stack className="pre-images">
+                        {
+                            imageUrls.map((image: string) => (
+                                <Box className="pre-view">
+                                    <img src={image} alt="" />
+                                </Box>
+                            ))
+                        }
+                    </Stack>
+                    <Button variant="contained" color="warning" onClick={createRequestHandler}>Create</Button>
                 </Stack>
             </Modal>
         </Stack>
     )
 }
 
-export default CreatePost
+export default CreatePost;
