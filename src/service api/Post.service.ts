@@ -32,6 +32,17 @@ class PostService {
             throw err.response.data
         }
     }
+
+    public async getPost(targetPostId: string): Promise<Post> {
+        try {
+            const url = `${this.serverApi}/post/${targetPostId}`
+            const response = await axios.get(url, { withCredentials: true })
+            return response.data.value
+        } catch (err: any) {
+            console.log(`Error: getPost, ${err.response.data.message}`)
+            throw err.response.data
+        }
+    }
 }
 
 export default PostService
