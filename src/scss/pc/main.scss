@@ -5,6 +5,7 @@
 @import "./home/index.scss";
 @import "./home/members.scss";
 @import "./home/posts.scss";
+@import "./home//chatmenu.scss";
 
 //Posts
 @import "./posts/index.scss";
@@ -14,6 +15,7 @@
 @import "./comments/index.scss";
 
 .pc-wrapper {
+  font-family: "Playwrite IT Moderna", cursive;
   .lifter {
     position: fixed;
     right: 20px;

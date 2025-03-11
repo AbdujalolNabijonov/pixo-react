@@ -25,15 +25,15 @@
       height: auto;
       padding: 10px 22px;
       .member {
-        width: 60px;
+        width: 50px;
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
         cursor: pointer;
         .member-image {
-          height: 80px;
-          width: 80px;
+          height: 70px;
+          width: 70px;
           border-radius: 50%;
           border: 3px solid transparent;
           background: linear-gradient(

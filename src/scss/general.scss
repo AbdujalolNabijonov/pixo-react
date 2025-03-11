@@ -2,9 +2,9 @@ body,
 html {
   margin: 0;
   padding: 0;
-  font-family: Roboto, Helvetica, Arial, sans-serif;
   scroll-behavior: smooth;
   user-select: none;
+  font-family: "Playwrite IT Moderna", cursive;
 }
 .pagination {
   align-self: center;
@@ -23,6 +23,7 @@ html {
   width: 300px;
   padding: 0;
   bottom: 40px;
+  font-family: "Playwrite IT Moderna", cursive;
   .MuiPaper-root {
     left: 5px !important;
   }
@@ -43,6 +44,7 @@ html {
       width: 250px;
       border-radius: 10px;
       padding: 10px;
+      font-family: "Playwrite IT Moderna", cursive;
       &:hover {
         background-color: #555;
       }
