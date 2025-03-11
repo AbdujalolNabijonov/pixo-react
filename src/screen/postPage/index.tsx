@@ -12,6 +12,7 @@ import useGlobal from "../../libs/hooks/useGlobal"
 import CommentService from "../../service api/Comment.service"
 import { Comment } from "../../libs/types/comment"
 import Comments from "../../components/others/comments"
+import PostCard from "../../components/others/postCard"
 
 const PostPage = () => {
     const [searchObj, setSearchObj] = useState<PostsInquiry>({
@@ -93,41 +94,7 @@ const PostPage = () => {
                             </Stack>
                         ) :
                             posts.map((post: Post, index: number) => (
-                                <Box className={`explore-item`} key={index}>
-                                    <Stack className="explore-head">
-                                        <Stack className="member-info">
-                                            <Avatar src={post.memberData?.memberImage ? post.memberData?.memberImage : "/imgs/default-user.jpg"} />
-                                            <Stack className="info-name">
-                                                <Box>{post.memberData?.memberNick}</Box>
-                                                <Box>{post.postTitle ?? "post"}</Box>
-                                            </Stack>
-                                        </Stack>
-                                        <Stack className="stats-items">
-                                            <Stack className="stats-item">
-                                                <FavoriteOutlined />
-                                                <Box>{post.postLikes}</Box>
-                                            </Stack>
-                                            <Stack className="stats-item">
-                                                <QuestionAnswerOutlined />
-                                                <Box>{post.postComments}</Box>
-                                            </Stack>
-                                        </Stack>
-                                    </Stack>
-                                    <Swiper
-                                        slidesPerView={1}
-                                        modules={[SPagination]}
-                                        pagination={true}
-                                        className="explore-swiper"
-                                    >
-                                        {
-                                            post.postImages.map((image: string, index: number) => (
-                                                <SwiperSlide key={index} onClick={() => toggleCommentModal(post._id)}>
-                                                    <img src={image} alt={"post"} />
-                                                </SwiperSlide>
-                                            ))
-                                        }
-                                    </Swiper>
-                                </Box>
+                                <PostCard post={post} key={index} toggleCommentModal={toggleCommentModal} />
                             ))}
                     <Comments
                         openComment={openModal}
@@ -137,18 +104,24 @@ const PostPage = () => {
                         setRebuildComments={setRebuildComments}
                     />
                 </Stack>
+                <Stack>
                 {
                     posts.length !== 0 ? (
                         <Pagination
                             className="pagination"
                             count={Math.ceil(totalPost / searchObj.limit)}
                             page={searchObj.page}
+                            onChange={(e: any, page: number) => {
+                                searchObj.page = page
+                                setSearchObj({ ...searchObj })
+                            }}
                             color="secondary"
                             variant="outlined"
                             shape="rounded"
                         />
                     ) : null
                 }
+                </Stack>
             </Stack>
         </Stack>
     )

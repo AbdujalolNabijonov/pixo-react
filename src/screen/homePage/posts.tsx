@@ -12,8 +12,10 @@ import Comments from "../../components/others/comments"
 import { Comment } from "../../libs/types/comment"
 import CommentService from "../../service api/Comment.service"
 import { Message } from "../../libs/Message"
+import { useNavigate } from "react-router-dom"
 
 const Posts = (props: any) => {
+    const navigate = useNavigate()
     const [posts, setPosts] = useState<Post[]>([])
     const [totalPost, setTotalPost] = useState<number>(0)
     const [opeenModal, setOpenModal] = useState<boolean>(false)
@@ -34,7 +36,7 @@ const Posts = (props: any) => {
         const postService = new PostService();
         postService.getPosts(searchObj).then((posts: PostList) => {
             setPosts(posts.list)
-            setTotalPost(posts.metaCounter[0].total)
+            setTotalPost(posts.metaCounter[0]?.total ?? 0)
         }).catch(err => {
             sweetErrorHandling(err).then()
         })
@@ -108,7 +110,9 @@ const Posts = (props: any) => {
                                         <Avatar src={post.memberData?.memberImage ? post.memberData?.memberImage : "/imgs/default-user.jpg"} className="" />
                                     </Box>
                                     <Stack className="member-name">
-                                        <Box>{post.memberData?.memberNick}</Box>
+                                        <Box onClick={() => {
+                                            navigate(`/memberpage/${post.memberData?._id}`)
+                                        }}>{post.memberData?.memberNick}</Box>
                                         <Box>{moment(post.createdAt).format("DD MMMM, YYYY")}</Box>
                                     </Stack>
                                 </Stack>

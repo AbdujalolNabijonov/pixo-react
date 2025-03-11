@@ -181,7 +181,6 @@
         .overlay_panel {
           position: absolute;
           display: flex;
-          padding: 10px;
           border-radius: 0 20px 0 20px;
           align-items: center;
           justify-content: center;
@@ -245,7 +244,7 @@
             color: black;
             font-weight: 600;
             letter-spacing: 1px;
-            margin-top: 10px;
+            margin-top: 0px;
             font-size: 16x;
             cursor: pointer;
           }

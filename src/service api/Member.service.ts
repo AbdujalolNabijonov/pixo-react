@@ -34,6 +34,18 @@ class MemberService {
         }
     }
 
+    public async getMember(memberId: string): Promise<Member> {
+        try {
+            const url = `${this.server}/member/${memberId}`;
+            const response = await axios.get(url, { withCredentials: true });
+            const member = response.data.value;
+            return member
+        } catch (err: any) {
+            console.log(`ERROR: getMember, ${err.response.data?.message}`)
+            throw err.response.data
+        }
+    }
+
     public async getMembers(): Promise<Members> {
         try {
             const url = `${this.server}/member/members`;

@@ -1,7 +1,6 @@
 .pc-wrapper {
   .posts {
     margin-top: 10px;
-    min-height: 100vh;
     .empty-post{
       justify-content: center;
       align-items: center;
@@ -58,6 +57,9 @@
           .swiper-pagination {
             position: absolute;
             bottom: 10px;
+          }
+          .swiper-pagination-bullet{
+            background-color: rgb(156, 153, 153);
           }
           .swiper-pagination-bullet-active {
             background-color: white;

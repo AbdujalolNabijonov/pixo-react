@@ -1,0 +1,81 @@
+.pc-wrapper {
+  .member-page {
+    background-color: black;
+    width: 100%;
+    min-height: 100vh;
+    color: white;
+    .container {
+      padding-left: 12%;
+      margin-top: 30px;
+      .member-data {
+        flex-direction: row;
+        justify-content: center;
+        gap: 100px;
+        align-items: center;
+        .member-image {
+          height: 120px;
+          width: 120px;
+          border-radius: 50%;
+          img {
+            height: 100%;
+            width: 100%;
+            border-radius: 50%;
+          }
+        }
+        .member-info {
+          .member-name {
+            font-size: 20px;
+          }
+          .member-stats {
+            margin: 20px 0;
+            flex-direction: row;
+            gap: 30px;
+            .member-stats-item {
+              flex-direction: row;
+              gap: 10px;
+              align-items: center;
+            }
+          }
+          .member-desc {
+            width: 350px;
+            margin: 10px 0;
+          }
+        }
+      }
+      .tab-list {
+        margin-top: 20px;
+        align-items: center;
+        .tab-item {
+          color: white;
+        }
+        .MuiTabs-indicator {
+          background-color: white;
+          height: 3px;
+        }
+      }
+      .post-list {
+        display: flex;
+        flex-direction: column;
+        .posts {
+          flex-direction: row;
+          gap: 10px;
+          justify-content: center;
+          height: auto;
+        }
+        .empty-post {
+          color: white;
+          margin-top: 40px;
+          align-items: center;
+          font-size: 24px;
+          svg {
+            font-size: 50px;
+          }
+        }
+        .pagi {
+          flex-direction: row;
+          justify-content: center;
+        }
+      }
+    }
+  }
+}

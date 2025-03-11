@@ -17,6 +17,7 @@ export const GlobalContext: React.FC<{ children: React.ReactNode }> = ({ childre
         const cookie = new Cookies();
         const token = cookie.get("accessToken")
         if (token && localStorage.getItem("member")) {
+            console.log(JSON.parse(localStorage.getItem("member") as string))
             setMember(JSON.parse(localStorage.getItem("member") as string))
         } else if (token && !localStorage.getItem("member")) {
             cookie.remove("accessToken")

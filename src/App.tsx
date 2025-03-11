@@ -15,6 +15,7 @@ function App() {
     <>
       <Routes>
         <Route path='/posts' element={<PostPage />} />
+        <Route path='/memberpage/:id' element={<MemberPage />} />
         <Route path='/memberpage' element={<MemberPage />} />
         <Route path='/' element={<HomePage />} />
       </Routes>
