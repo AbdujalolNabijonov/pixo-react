@@ -51,6 +51,22 @@ const ChatMenu = () => {
                     </Stack>
                     <Avatar />
                 </Stack>
+                <Stack className="msg-left msg">
+                    <Avatar />
+                    <Stack className="msg-body">
+                        <Box className="member-name">Hohn washington</Box>
+                        <Box className="msg-content">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</Box>
+                        <Box className="msg-date">27 feb, 20:00</Box>
+                    </Stack>
+                </Stack>
+                <Stack className="msg-right msg">
+                    <Stack className="msg-body">
+                        <Box className="member-name">Hohn washington</Box>
+                        <Box className="msg-content">Lorem is</Box>
+                        <Box className="msg-date">27 feb, 20:00</Box>
+                    </Stack>
+                    <Avatar />
+                </Stack>
             </Stack>
             <Stack className="chat-footer">
                 <IconButton className="add-react" onClick={toggleOpenEmoji}><AddReactionOutlined /></IconButton>

@@ -3,9 +3,10 @@ import BasicLayout from "../../components/layouts/basicLayout"
 
 const MemberPage = () => {
     return (
-        <Stack>
-            <h1>This is my page</h1>
-            <a href="/">Home</a>
+        <Stack className="member-page">
+            <Stack>
+                
+            </Stack>
         </Stack>
     )
 }

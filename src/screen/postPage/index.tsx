@@ -9,6 +9,9 @@ import moment from "moment"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Pagination as SPagination } from "swiper/modules"
 import useGlobal from "../../libs/hooks/useGlobal"
+import CommentService from "../../service api/Comment.service"
+import { Comment } from "../../libs/types/comment"
+import Comments from "../../components/others/comments"
 
 const PostPage = () => {
     const [searchObj, setSearchObj] = useState<PostsInquiry>({
@@ -21,7 +24,10 @@ const PostPage = () => {
     const [posts, setPosts] = useState<Post[]>([])
     const [totalPost, setTotalPost] = useState<number>(0)
     const { rebuild } = useGlobal()
-
+    const [comments, setComments] = useState<Comment[]>([])
+    const [targetPost, setTargetPost] = useState<Post | null>(null)
+    const [openModal, setOpenModal] = useState<boolean>(false)
+    const [rebuildComments, setRebuildComments] = useState(new Date())
     useEffect(() => {
         const postService = new PostService()
         postService.getPosts(searchObj).then((posts: Posts) => {
@@ -30,11 +36,43 @@ const PostPage = () => {
         }).catch(err => {
             sweetErrorHandling(err).then()
         })
-    }, [searchObj, rebuild])
+    }, [searchObj, rebuild, rebuildComments])
 
+    useEffect(() => {
+        if (targetPost?._id) {
+            const commentService = new CommentService()
+            commentService.getComments(targetPost._id).then(data => {
+                setComments(data.list)
+            }).catch((err: any) => {
+                sweetErrorHandling(err).then()
+            });
+            const postService = new PostService();
+            postService.getPost(targetPost._id).then((post: Post) => {
+                setTargetPost(post)
+            }).catch(err => {
+                sweetErrorHandling(err).then()
+            })
+        }
+    }, [rebuildComments])
     const textSearchHandler = (e: any) => {
         searchObj.search.text = e.target.value;
         setSearchObj({ ...searchObj })
+    }
+    const toggleCommentModal = async (postId: string) => {
+        try {
+            const postService = new PostService()
+            const commentService = new CommentService()
+            const result = await postService.getPost(postId)
+            const comments = await commentService.getComments(postId);
+            setComments(comments.list)
+            setTargetPost(result)
+            setOpenModal(true)
+        } catch (err: any) {
+            await sweetErrorHandling(err)
+        }
+    }
+    const openCommentModal = () => {
+        setOpenModal(false)
     }
     return (
         <Stack className="post-page">
@@ -67,11 +105,11 @@ const PostPage = () => {
                                         <Stack className="stats-items">
                                             <Stack className="stats-item">
                                                 <FavoriteOutlined />
-                                                <Box>12</Box>
+                                                <Box>{post.postLikes}</Box>
                                             </Stack>
                                             <Stack className="stats-item">
                                                 <QuestionAnswerOutlined />
-                                                <Box>10</Box>
+                                                <Box>{post.postComments}</Box>
                                             </Stack>
                                         </Stack>
                                     </Stack>
@@ -83,7 +121,7 @@ const PostPage = () => {
                                     >
                                         {
                                             post.postImages.map((image: string, index: number) => (
-                                                <SwiperSlide key={index}>
+                                                <SwiperSlide key={index} onClick={() => toggleCommentModal(post._id)}>
                                                     <img src={image} alt={"post"} />
                                                 </SwiperSlide>
                                             ))
@@ -91,6 +129,13 @@ const PostPage = () => {
                                     </Swiper>
                                 </Box>
                             ))}
+                    <Comments
+                        openComment={openModal}
+                        toggleCommentModal={openCommentModal}
+                        targetPost={targetPost}
+                        comments={comments}
+                        setRebuildComments={setRebuildComments}
+                    />
                 </Stack>
                 {
                     posts.length !== 0 ? (

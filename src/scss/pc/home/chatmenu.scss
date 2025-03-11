@@ -15,14 +15,10 @@
         font-weight: 600;
         flex-direction: row;
         gap: 20px;
-        background: linear-gradient(
-          45deg,
-          rgb(221, 104, 237),
-          rgb(241, 60, 60),
-          rgb(244, 244, 92)
-        );
+        background: black;
         padding: 10px;
         align-items: center;
+        border-bottom: 1px solid  white;
       }
       .chat-body {
         flex: 1;
