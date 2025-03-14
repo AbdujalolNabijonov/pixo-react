@@ -1,0 +1,96 @@
+.setting-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .setting-modal-body {
+    height: 65%;
+    width: 50%;
+    background-color: rgb(24, 23, 23);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 5px white;
+    .setting-head {
+      position: relative;
+      height: 150px;
+      width: 100%;
+      background-image: url("../../../../public/imgs/1.jpg");
+      background-position: center;
+      background-size: cover;
+
+      .member-image {
+        position: absolute;
+        left: 30px;
+        top: 60px;
+        height: 150px;
+        width: 150px;
+        border-radius: 50%;
+        border: 1px solid black;
+        img {
+          object-fit: cover;
+          object-position: center;
+          height: 100%;
+          width: 100%;
+          border-radius: 50%;
+          background-color: #2e2d2d;
+        }
+        .add-photo {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          background-color: gray;
+          svg {
+            color: white;
+            font-size: 30px;
+          }
+          input {
+            position: absolute;
+            opacity: 0;
+          }
+        }
+      }
+    }
+    .setting-body {
+      padding: 100px 20px 20px 20px;
+      .member-nick-phone {
+        flex-direction: row;
+        gap: 40px;
+        .form-input {
+          flex: 1;
+          label {
+            font-weight: 600;
+            font-size: 15px;
+            color: white;
+            letter-spacing: 1px;
+          }
+          input{
+            background-color: #2e2d2d;
+            padding: 5px 10px;
+            border-radius: 5px;
+            border: none;
+            color: white;
+          }
+        }
+      }
+      textarea{
+        background-color: #2e2d2d;
+        border-radius: 5px;
+        border: none;
+        margin-top: 20px;
+        color: white;
+        resize: none;
+        overflow: auto;
+        padding: 5px 10px;
+      }
+      .submit-btn{
+        padding: 5px;
+        width: 100px;
+        align-self: flex-end;
+        margin-top: 10px;
+        color: white;
+        border: 1px solid rgb(137, 137, 137);
+        font-size: 12px;
+        letter-spacing: 1px;
+      }
+    }
+  }
+}

@@ -68,5 +68,20 @@ class MemberService {
             throw err.response.data
         }
     }
+
+    public async updateMember(formData: any): Promise<Member> {
+        try {
+            const url = `${this.server}/member/edit`;
+            const response = await axios.post(url, formData, {
+                withCredentials: true,
+                headers: { "Content-Type": "multipart/form-data" }
+            })
+            localStorage.setItem("member", JSON.stringify(response.data.value))
+            return response.data.value
+        } catch (err: any) {
+            console.log(`ERROR: updateMember, ${err.response.data.message}`)
+            throw err.response
+        }
+    }
 }
 export default MemberService

@@ -23,6 +23,7 @@
           }
         }
         .member-info {
+          position: relative;
           .member-name {
             font-size: 20px;
           }
@@ -39,6 +40,14 @@
           .member-desc {
             width: 350px;
             margin: 10px 0;
+          }
+          .setting{
+            position: absolute;
+            right: 0;
+            top:10px;
+            svg{
+                color: white;
+            }   
           }
         }
       }

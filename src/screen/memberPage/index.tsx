@@ -1,6 +1,6 @@
-import { Box, Pagination, Stack } from "@mui/material"
+import { Box, IconButton, Pagination, Stack } from "@mui/material"
 import BasicLayout from "../../components/layouts/basicLayout"
-import { Favorite, QuestionAnswerOutlined, RemoveRedEyeOutlined, ReportGmailerrorredOutlined } from "@mui/icons-material"
+import { Favorite, QuestionAnswerOutlined, RemoveRedEyeOutlined, ReportGmailerrorredOutlined, Settings } from "@mui/icons-material"
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
@@ -17,6 +17,7 @@ import { Comment } from "../../libs/types/comment";
 import { useParams } from "react-router-dom";
 import { Member } from "../../libs/types/member";
 import MemberService from "../../service api/Member.service";
+import Setting from "./setting";
 
 const MemberPage = () => {
     const [value, setValue] = useState("1")
@@ -28,6 +29,7 @@ const MemberPage = () => {
     const [targetPost, setTargetPost] = useState<Post | null>(null)
     const [openModal, setOpenModal] = useState<boolean>(false)
     const [rebuildComments, setRebuildComments] = useState<Date>(new Date())
+    const [openSetting, setOpenSetting] = useState<boolean>(false)
     const router = useParams<{ id: string }>()
     const [searchObj, setSearchObj] = useState<PostsInquiry>({
         page: 1,
@@ -38,6 +40,7 @@ const MemberPage = () => {
             memberId: router.id ? router.id : member._id
         }
     })
+    const [rebuild, setRebuild] = useState(new Date())
 
     useEffect(() => {
         const postService = new PostService()
@@ -58,7 +61,7 @@ const MemberPage = () => {
                 sweetErrorHandling(err).then()
             })
         }
-    }, [])
+    }, [rebuild])
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -99,6 +102,9 @@ const MemberPage = () => {
     const openCommentModal = () => {
         setOpenModal(false)
     }
+    const toggleOpenSetting = () => {
+        setOpenSetting(!openSetting)
+    }
     return (
         <Stack className="member-page">
             <Stack className="container">
@@ -123,6 +129,9 @@ const MemberPage = () => {
                                 <Box>12</Box>
                             </Stack>
                         </Stack>
+                        <IconButton className="setting" onClick={toggleOpenSetting}>
+                            <Settings />
+                        </IconButton>
                     </Stack>
                 </Stack>
                 <TabContext value={value}>
@@ -152,6 +161,7 @@ const MemberPage = () => {
                             comments={comments}
                             setRebuildComments={setRebuildComments}
                         />
+                        <Setting setRebuild={setRebuild} openSetting={openSetting} toggleOpenSetting={toggleOpenSetting} />
                         {
                             posts.length !== 0 ? (
                                 <Pagination

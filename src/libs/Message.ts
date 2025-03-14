@@ -7,4 +7,6 @@ export class Message {
     static AUTHENTICATE_FIRST = "Sign in first!"
     static POST_CREATED = "Successfully posted!"
     static POST_AGREE = "Do you want to create a post"
+    static IMAGE_FORMAT = "Image is not in allowed format, png, jpg, jpeg"
+    static UPDATED_DATA = "Data updated successfully!"
 }

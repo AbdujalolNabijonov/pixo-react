@@ -7,6 +7,7 @@ interface Global {
     member: Member | null;
     rebuild: Date;
     setRebuild: any
+    setMember: any
 }
 export const MyContext = createContext<Global | undefined>(undefined)
 
@@ -24,7 +25,7 @@ export const GlobalContext: React.FC<{ children: React.ReactNode }> = ({ childre
         }
     }, [])
     return (
-        <MyContext.Provider value={{ member: member, rebuild, setRebuild }}>
+        <MyContext.Provider value={{ member: member, rebuild, setRebuild, setMember }}>
             {children}
         </MyContext.Provider>
     )
