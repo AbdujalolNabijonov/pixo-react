@@ -1,7 +1,7 @@
 import { createContext } from "react";
 import React, { useEffect, useState } from "react"
 import { Member } from "../types/member"
-import Cookies from "universal-cookie"
+import Cookies from "universal-cookie" 
 
 interface Global {
     member: Member | null;
