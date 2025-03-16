@@ -1,4 +1,5 @@
 import { MemberStatus, MemberType } from "../enum/member.enum";
+import { MeLiked } from "./post";
 
 export interface LoginInput {
     memberNick: string;
@@ -21,6 +22,8 @@ export interface Member {
     memberDesc?: string
     memberPosts: number
     memberWarnings: number
+    memberLikes: number
+    meLiked: MeLiked[]
     createdAt: Date
     updatedAt: Date
 }

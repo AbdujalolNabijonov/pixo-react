@@ -1,6 +1,6 @@
-import { Box, Stack } from "@mui/material"
+import { Box, Button, Stack } from "@mui/material"
 import BasicLayout from "../../components/layouts/basicLayout"
-import { Favorite, QuestionAnswerOutlined, RemoveRedEyeOutlined, Settings } from "@mui/icons-material"
+import { FavoriteOutlined, QuestionAnswerOutlined } from "@mui/icons-material"
 import TabContext from '@mui/lab/TabContext';
 import TabPanel from '@mui/lab/TabPanel';
 import { useEffect, useState } from "react";
@@ -10,19 +10,21 @@ import { Member } from "../../libs/types/member";
 import MemberService from "../../service api/Member.service";
 import MyPosts from "./myPosts";
 import useGlobal from "../../libs/hooks/useGlobal";
+import { Message } from "../../libs/Message";
 
 const MemberPage = () => {
     const [targetMember, setTargetMember] = useState<Member | null>(null)
+    const [rebuild, setRebuild] = useState(new Date())
     const router = useParams<{ id: string }>()
-    const {member}=useGlobal()
+    const { member } = useGlobal()
     const navigate = useNavigate()
 
-    useEffect(()=>{
-        if(member?._id===router.id){
+    useEffect(() => {
+        if (member?._id === router.id) {
             navigate("/my-page")
         }
-    },[])
-    
+    })
+
     useEffect(() => {
         if (router.id) {
             const memberService = new MemberService()
@@ -32,12 +34,22 @@ const MemberPage = () => {
                 sweetErrorHandling(err).then()
             })
         }
-    }, [router])
+    }, [router, rebuild])
 
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
 
+    const likeTargetMember = async () => {
+        try {
+            if (!member) throw new Error(Message.AUTHENTICATE_FIRST);
+            const memberService = new MemberService()
+            await memberService.likeTargetMember(targetMember?._id as string)
+            setRebuild(new Date())
+        } catch (err: any) {
+            await sweetErrorHandling(err)
+        }
+    }
     return (
         <Stack className="member-page">
             <Stack className="container">
@@ -54,12 +66,10 @@ const MemberPage = () => {
                                 <Box>{targetMember?.memberPosts}</Box>
                             </Stack>
                             <Stack className="member-stats-item">
-                                <Favorite />
-                                <Box>10</Box>
-                            </Stack>
-                            <Stack className="member-stats-item">
-                                <RemoveRedEyeOutlined />
-                                <Box>12</Box>
+                                <Button onClick={likeTargetMember}>
+                                    <FavoriteOutlined sx={targetMember?.meLiked[0]?.meLiked?{fill:"red"}:{fill:"white"}}/>
+                                </Button>
+                                <Box>{targetMember?.memberLikes ?? 0}</Box>
                             </Stack>
                         </Stack>
                     </Stack>

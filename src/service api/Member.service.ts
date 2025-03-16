@@ -83,5 +83,15 @@ class MemberService {
             throw err.response
         }
     }
+    public async likeTargetMember(memberId: string): Promise<Member> {
+        try {
+            const url = `${this.server}/member/like/${memberId}`;
+            const response = await axios.post(url, null, { withCredentials: true })
+            return response.data.value
+        } catch (err: any) {
+            console.log(`ERROR: likeTargetMember, ${err.response.data.message}`)
+            throw err.response
+        }
+    }
 }
 export default MemberService

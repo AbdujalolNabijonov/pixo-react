@@ -1,6 +1,6 @@
 import { Box, IconButton, Stack } from "@mui/material"
 import BasicLayout from "../../components/layouts/basicLayout"
-import { Favorite, QuestionAnswerOutlined, RemoveRedEyeOutlined, ReportGmailerrorredOutlined, Settings } from "@mui/icons-material"
+import { FavoriteOutlined, QuestionAnswerOutlined, Settings } from "@mui/icons-material"
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
@@ -23,11 +23,11 @@ const MemberPage = () => {
     const [rebuild, setRebuild] = useState(new Date())
     const navigate = useNavigate()
 
-    useEffect(()=>{
-        if(!member){
+    useEffect(() => {
+        if (!member) {
             navigate("/")
         }
-    },[])
+    })
 
     useEffect(() => {
         if (localStorage.getItem("value")) {
@@ -36,7 +36,7 @@ const MemberPage = () => {
         return () => {
             localStorage.removeItem("value")
         }
-    }, [])
+    },[])
 
     useEffect(() => {
         if (member?._id) {
@@ -51,7 +51,7 @@ const MemberPage = () => {
 
     useEffect(() => {
         window.scrollTo(0, 0)
-    }, [])
+    },[])
 
     const changeTabValueHandler = (e: any, index: any) => {
         setValue(index)
@@ -76,12 +76,8 @@ const MemberPage = () => {
                                 <Box>{member?.memberPosts}</Box>
                             </Stack>
                             <Stack className="member-stats-item">
-                                <Favorite />
-                                <Box>10</Box>
-                            </Stack>
-                            <Stack className="member-stats-item">
-                                <RemoveRedEyeOutlined />
-                                <Box>12</Box>
+                                <FavoriteOutlined />
+                                <Box>{member?.memberLikes ?? 0}</Box>
                             </Stack>
                         </Stack>
                         <IconButton className="setting" onClick={toggleOpenSetting}>
