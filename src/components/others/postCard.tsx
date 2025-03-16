@@ -1,4 +1,4 @@
-import { Avatar, Box, Stack } from "@mui/material"
+import { Avatar, Box, Button, IconButton, Stack } from "@mui/material"
 import { Post } from "../../libs/types/post"
 import { FavoriteOutlined, QuestionAnswerOutlined } from "@mui/icons-material"
 import { Swiper, SwiperSlide } from "swiper/react"
@@ -8,10 +8,11 @@ import { useNavigate } from "react-router-dom"
 interface PostCardProps {
     post: Post;
     toggleCommentModal: any
+    likeTargetPostHandler:any
 }
 
 const PostCard = (props: PostCardProps) => {
-    const { post, toggleCommentModal } = props
+    const { post, toggleCommentModal,likeTargetPostHandler } = props
     const navigate = useNavigate()
     return (
         <Box className={`explore-item`} key={"1"}>
@@ -29,7 +30,9 @@ const PostCard = (props: PostCardProps) => {
                 </Stack>
                 <Stack className="stats-items">
                     <Stack className="stats-item">
-                        <FavoriteOutlined />
+                        <Box onClick={()=>likeTargetPostHandler(post._id)}>
+                            <FavoriteOutlined sx={post.meLiked[0]?.meLiked ? { fill: "red" } : { fill: "white" }} />
+                        </Box>
                         <Box>{post.postLikes}</Box>
                     </Stack>
                     <Stack className="stats-item">

@@ -31,6 +31,7 @@ const Posts = (props: any) => {
         search: {}
     })
     const { rebuild, member, setRebuild } = useGlobal()
+    const [rebuildPosts, setRebuildPosts] = useState(new Date())
 
     useEffect(() => {
         const postService = new PostService();
@@ -40,7 +41,7 @@ const Posts = (props: any) => {
         }).catch(err => {
             sweetErrorHandling(err).then()
         })
-    }, [rebuild, rebuildComments])
+    }, [rebuild, rebuildComments, rebuildPosts])
 
     useEffect(() => {
         if (targetPost?._id) {
@@ -92,6 +93,20 @@ const Posts = (props: any) => {
             await sweetErrorHandling(err)
         }
     }
+
+    const likeTargetPostHandler = async (postId: string) => {
+        try {
+            if (!member?._id) throw new Error(Message.AUTHENTICATE_FIRST);
+            const postService = new PostService()
+            await postService.likeTargetPost(postId)
+            setRebuildPosts(new Date())
+            if (targetPost?._id) {
+                setRebuildComments(new Date())
+            }
+        } catch (err: any) {
+            await sweetErrorHandling(err)
+        }
+    }
     return (
         <Stack className="posts">
             {
@@ -133,10 +148,14 @@ const Posts = (props: any) => {
                                 </Stack>
                                 <Stack className="post-footer">
                                     <Stack className="post-stats">
-                                        <Button className="post-stats-item">
-                                            <FavoriteOutlined />
+                                        <Stack className="post-stats-item">
+                                            <Button onClick={() => likeTargetPostHandler(post._id)}>
+                                                <FavoriteOutlined
+                                                    sx={post.meLiked[0]?.meLiked ? { fill: "red" } : { fill: "white" }}
+                                                />
+                                            </Button>
                                             <Box>{post.postLikes}</Box>
-                                        </Button>
+                                        </Stack>
                                         <Button className="post-stats-item" onClick={() => toggleCommentModal(post._id)}>
                                             <QuestionAnswerOutlined sx={{ color: "white" }} />
                                             <Box>{post.postComments}</Box>
@@ -186,6 +205,7 @@ const Posts = (props: any) => {
                     )
             }
             <Comments
+                likeTargetPostHandler={likeTargetPostHandler}
                 openComment={opeenModal}
                 toggleCommentModal={openCommentModal}
                 targetPost={targetPost}

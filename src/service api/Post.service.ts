@@ -43,6 +43,19 @@ class PostService {
             throw err.response.data
         }
     }
+
+    public async likeTargetPost(postId: string): Promise<Post> {
+        try {
+            const url = `${this.serverApi}/post/like/${postId}`
+            const response = await axios.post(url, null, {
+                withCredentials: true
+            })
+            return response.data.value
+        } catch (err: any) {
+            console.log(`Error: likeTargetPost, ${err.response.data.message}`)
+            throw err.response.data
+        }
+    }
 }
 
 export default PostService

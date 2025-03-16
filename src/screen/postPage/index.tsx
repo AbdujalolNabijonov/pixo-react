@@ -13,6 +13,7 @@ import CommentService from "../../service api/Comment.service"
 import { Comment } from "../../libs/types/comment"
 import Comments from "../../components/others/comments"
 import PostCard from "../../components/others/postCard"
+import { Message } from "../../libs/Message"
 
 const PostPage = () => {
     const [searchObj, setSearchObj] = useState<PostsInquiry>({
@@ -29,6 +30,7 @@ const PostPage = () => {
     const [targetPost, setTargetPost] = useState<Post | null>(null)
     const [openModal, setOpenModal] = useState<boolean>(false)
     const [rebuildComments, setRebuildComments] = useState(new Date())
+    const member = localStorage.getItem("member") ? JSON.parse(localStorage.getItem("member") as string) : null
     useEffect(() => {
         const postService = new PostService()
         postService.getPosts(searchObj).then((posts: Posts) => {
@@ -75,6 +77,17 @@ const PostPage = () => {
     const openCommentModal = () => {
         setOpenModal(false)
     }
+    const likeTargetPostHandler = async (postId: string) => {
+        try {
+            if (!member?._id) throw new Error(Message.AUTHENTICATE_FIRST);
+            const postService = new PostService()
+            await postService.likeTargetPost(postId)
+            setRebuildComments(new Date())
+
+        } catch (err: any) {
+            await sweetErrorHandling(err)
+        }
+    }
     return (
         <Stack className="post-page">
             <Stack className="container">
@@ -94,9 +107,15 @@ const PostPage = () => {
                             </Stack>
                         ) :
                             posts.map((post: Post, index: number) => (
-                                <PostCard post={post} key={index} toggleCommentModal={toggleCommentModal} />
+                                <PostCard
+                                    post={post}
+                                    key={index}
+                                    toggleCommentModal={toggleCommentModal}
+                                    likeTargetPostHandler={likeTargetPostHandler}
+                                />
                             ))}
                     <Comments
+                        likeTargetPostHandler={likeTargetPostHandler}
                         openComment={openModal}
                         toggleCommentModal={openCommentModal}
                         targetPost={targetPost}
@@ -105,22 +124,22 @@ const PostPage = () => {
                     />
                 </Stack>
                 <Stack>
-                {
-                    posts.length !== 0 ? (
-                        <Pagination
-                            className="pagination"
-                            count={Math.ceil(totalPost / searchObj.limit)}
-                            page={searchObj.page}
-                            onChange={(e: any, page: number) => {
-                                searchObj.page = page
-                                setSearchObj({ ...searchObj })
-                            }}
-                            color="secondary"
-                            variant="outlined"
-                            shape="rounded"
-                        />
-                    ) : null
-                }
+                    {
+                        posts.length !== 0 ? (
+                            <Pagination
+                                className="pagination"
+                                count={Math.ceil(totalPost / searchObj.limit)}
+                                page={searchObj.page}
+                                onChange={(e: any, page: number) => {
+                                    searchObj.page = page
+                                    setSearchObj({ ...searchObj })
+                                }}
+                                color="secondary"
+                                variant="outlined"
+                                shape="rounded"
+                            />
+                        ) : null
+                    }
                 </Stack>
             </Stack>
         </Stack>

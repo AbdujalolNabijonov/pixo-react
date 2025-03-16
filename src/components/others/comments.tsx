@@ -18,9 +18,17 @@ interface CommentsInterface {
     targetPost: Post | null
     comments: Comment[]
     setRebuildComments: any
+    likeTargetPostHandler: any
 }
 const Comments = (props: CommentsInterface) => {
-    const { openComment, toggleCommentModal, targetPost, comments, setRebuildComments } = props
+    const {
+        openComment,
+        toggleCommentModal,
+        targetPost,
+        comments,
+        setRebuildComments,
+        likeTargetPostHandler
+    } = props
     const [openEmojiAnchor, setOpenEmojiAnchor] = useState(null)
     const [comment, setComment] = useState("")
     const { member } = useGlobal()
@@ -128,7 +136,11 @@ const Comments = (props: CommentsInterface) => {
                         </Stack>
                         <Stack className="post-stats">
                             <Stack className="post-stat">
-                                <FavoriteOutlined sx={{ fill: "red" }} />
+                                <IconButton onClick={() => likeTargetPostHandler(targetPost?._id)}>
+                                    <FavoriteOutlined
+                                        sx={targetPost?.meLiked[0]?.meLiked ? { fill: "red" } : { fill: "white" }}
+                                    />
+                                </IconButton>
                                 <Box>{targetPost?.postLikes}</Box>
                             </Stack>
                             <Stack className="post-stat">

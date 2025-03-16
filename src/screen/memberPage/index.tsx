@@ -14,10 +14,11 @@ import PostCard from "../../components/others/postCard";
 import Comments from "../../components/others/comments";
 import CommentService from "../../service api/Comment.service";
 import { Comment } from "../../libs/types/comment";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Member } from "../../libs/types/member";
 import MemberService from "../../service api/Member.service";
 import Setting from "./setting";
+import { Message } from "../../libs/Message";
 
 const MemberPage = () => {
     const [value, setValue] = useState("1")
@@ -41,7 +42,12 @@ const MemberPage = () => {
         }
     })
     const [rebuild, setRebuild] = useState(new Date())
+    const [rebuildPost, setRebuildPost] = useState(new Date())
+    const navigate = useNavigate()
 
+    useEffect(() => {
+        if (!targetMember?._id) navigate("/")
+    }, [])
     useEffect(() => {
         const postService = new PostService()
         postService.getPosts(searchObj).then((posts: Posts) => {
@@ -50,18 +56,18 @@ const MemberPage = () => {
         }).catch(err => {
             sweetErrorHandling(err).then()
         })
-    }, [searchObj])
+    }, [searchObj, router, rebuildPost])
 
     useEffect(() => {
         if (router.id || member._id) {
             const memberService = new MemberService()
-            memberService.getMember(router.id ? router.id : member._id).then((member: Member) => {
+            memberService.getMember(router.id ? router.id : member?._id).then((member: Member) => {
                 setTargetMember(member)
             }).catch((err: any) => {
                 sweetErrorHandling(err).then()
             })
         }
-    }, [rebuild])
+    }, [rebuild, router])
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -105,6 +111,17 @@ const MemberPage = () => {
     const toggleOpenSetting = () => {
         setOpenSetting(!openSetting)
     }
+    const likeTargetPostHandler = async (postId: string) => {
+        try {
+            if (!member?._id) throw new Error(Message.AUTHENTICATE_FIRST);
+            const postService = new PostService()
+            await postService.likeTargetPost(postId)
+            setRebuildComments(new Date())
+            setRebuildPost(new Date())
+        } catch (err: any) {
+            await sweetErrorHandling(err)
+        }
+    }
     return (
         <Stack className="member-page">
             <Stack className="container">
@@ -137,15 +154,24 @@ const MemberPage = () => {
                 <TabContext value={value}>
                     <Stack className="tab-list">
                         <TabList aria-label="lab API tabs example" onChange={changeTabValueHandler}>
-                            <Tab className="tab-item" label="My Posts" value="1" />
-                            <Tab className="tab-item" label="Favorities" value="2" />
+                            <Tab className="tab-item" label="Posts" value="1" />
+                            {
+                                router.id ? null : (
+                                    <Tab className="tab-item" label="Favorities" value="2" />
+                                )
+                            }
                         </TabList>
                     </Stack>
                     <TabPanel value={"1"} className="post-list">
                         <Stack className="posts">
                             {
                                 posts.length > 0 ? posts.map((post: Post, index: number) => (
-                                    <PostCard post={post} toggleCommentModal={toggleCommentModal} />
+                                    <PostCard
+                                        post={post}
+                                        toggleCommentModal={toggleCommentModal}
+                                        key={index}
+                                        likeTargetPostHandler={likeTargetPostHandler}
+                                    />
                                 )) : (
                                     <Stack className="empty-post">
                                         <ReportGmailerrorredOutlined />
@@ -155,6 +181,7 @@ const MemberPage = () => {
                             }
                         </Stack>
                         <Comments
+                            likeTargetPostHandler={likeTargetPostHandler}
                             openComment={openModal}
                             toggleCommentModal={openCommentModal}
                             targetPost={targetPost}

@@ -12,8 +12,14 @@ export interface Post {
     postLikes: number
     postViews: number
     postComments: number
+    meLiked: MeLiked[]
     createdAt: Date
     updatedAt: Date
+}
+export interface MeLiked {
+    likeTargetId?: string;
+    memberId?: string;
+    meLiked?: boolean
 }
 
 export interface Posts {
