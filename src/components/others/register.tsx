@@ -6,6 +6,7 @@ import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../libs/sweetA
 import MemberService from "../../service api/Member.service";
 import { AuthModalProps } from "../../libs/types/props";
 import { useNavigate } from "react-router-dom";
+import useGlobal from "../../libs/hooks/useGlobal";
 
 
 
@@ -19,7 +20,7 @@ const AuthenticateModal = (props: AuthModalProps) => {
     const [checkPassword, setCheckPassword] = React.useState("");
     const [hidden, setHidden] = useState<boolean>(true)
     const [inputType, setInputType] = useState<string>("password")
-    const navigate = useNavigate()
+    const { member, setMember } = useGlobal()
 
     //Handlers
     const handleSignUpRequest = async () => {
@@ -36,7 +37,8 @@ const AuthenticateModal = (props: AuthModalProps) => {
                 throw new Error(Message.PASSWORD_NOT_MATCH)
             }
             const memberService = new MemberService()
-            await memberService.signupRequest(signupObj)
+            const member = await memberService.signupRequest(signupObj)
+            setMember(member)
             await sweetTopSmallSuccessAlert(Message.SUCCESS_AUTH, 1000, true)
         } catch (err: any) {
             setOpenRegister(false)
@@ -49,7 +51,8 @@ const AuthenticateModal = (props: AuthModalProps) => {
                 throw new Error(Message.FULL_FILL_INPUTS)
             }
             const memberService = new MemberService()
-            await memberService.loginRequest(loginObj);
+            const member = await memberService.loginRequest(loginObj);
+            setMember(member)
             await sweetTopSmallSuccessAlert(Message.SUCCESS_AUTH, 1000, true)
         } catch (err: any) {
             setOpenRegister(false)

@@ -34,7 +34,7 @@ const Members = (props: any) => {
                             className="member" 
                             key={index}
                             onClick={()=>{
-                                navigate(`/memberpage/${member._id}`)
+                                navigate(`/member/${member._id}`)
                             }}
                             >
                                 <Box className="member-image">

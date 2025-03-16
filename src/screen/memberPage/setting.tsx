@@ -15,11 +15,10 @@ interface SettingProps {
 }
 
 const Setting = (props: SettingProps) => {
-    const memberObj = JSON.parse(localStorage.getItem("member") as string)
-    const [targetMember, setTargetMember] = useState<Member | null>(null)
+    const { member } = useGlobal()
     const { openSetting, toggleOpenSetting, setRebuild } = props;
     const { setMember } = useGlobal()
-    const [image, setImage] = useState(targetMember?.memberImage ?? "")
+    const [image, setImage] = useState(member?.memberImage ?? "")
     const [memberInputs, setMemberInputs] = useState({
         memberNick: '',
         memberPhone: "",
@@ -27,14 +26,6 @@ const Setting = (props: SettingProps) => {
     })
     const [disableBtn, setDisableBtn] = useState(true)
     const [file, setFile] = useState(null)
-
-
-    useEffect(() => {
-        const memberService = new MemberService();
-        memberService.getMember(memberObj._id).then((member: Member) => setTargetMember(member)).catch((err: any) => {
-            sweetErrorHandling(err).then()
-        })
-    }, [])
 
     useEffect(() => {
         if (memberInputs.memberNick || memberInputs.memberDesc || memberInputs.memberPhone || memberInputs.memberDesc || file) {
@@ -95,7 +86,7 @@ const Setting = (props: SettingProps) => {
             <Stack className="setting-modal-body">
                 <Stack className="setting-head">
                     <Box className="member-image">
-                        <img src={image || "/imgs/default-user.jpg"} alt="members" />
+                        <img src={image ?? "/imgs/default-user.jpg"} alt="members" />
                         <IconButton className="add-photo">
                             <AddAPhotoOutlined />
                             <input type="file" onChange={changeImageHandler} />
@@ -108,7 +99,7 @@ const Setting = (props: SettingProps) => {
                             <label className="input-label">Name</label>
                             <input
                                 type="text"
-                                placeholder={targetMember?.memberNick}
+                                placeholder={member?.memberNick}
                                 onChange={memberNickHandler}
                             />
                         </Stack>
@@ -116,14 +107,14 @@ const Setting = (props: SettingProps) => {
                             <label className="input-label">Phone</label>
                             <input
                                 type="text"
-                                placeholder={targetMember?.memberPhone}
+                                placeholder={member?.memberPhone}
                                 onChange={memberPhoneHandler}
                             />
                         </Stack>
                     </Stack>
                     <textarea
                         rows={5}
-                        value={targetMember?.memberDesc}
+                        value={member?.memberDesc}
                         onChange={memberDescHandler}
                     ></textarea>
                     <Button

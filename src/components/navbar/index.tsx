@@ -79,8 +79,8 @@ const Navbar = () => {
                     </MenuItem>
                     {
                         member?._id ? (
-                            <MenuItem className="menu-item" onClick={() => navigateHandler("/memberpage")}>
-                                <Stack className={routerPath === "/memberpage" ? "on menu-select" : "menu-select"}>
+                            <MenuItem className="menu-item" onClick={() => navigateHandler("/my-page")}>
+                                <Stack className={routerPath === "/my-page" ? "on menu-select" : "menu-select"}>
                                     <Box><Avatar src={member?.memberImage ? member.memberImage : "/imgs/default-user.jpg"} className="menu-icon" /></Box>
                                     <Box>Profile</Box>
                                 </Stack>
@@ -100,19 +100,28 @@ const Navbar = () => {
                         onClose={toggleExtraMenu}
                     >
                         <Stack className="menu-items">
-                            <MenuItem className="menu-item">
-                                <Stack className="menu-item-icon">
-                                    <Settings />
-                                    <Box>Settings</Box>
-                                </Stack>
-                            </MenuItem>
-                            <MenuItem className="menu-item">
-                                <Stack className="menu-item-icon">
-                                    <RecommendOutlined />
-                                    <Box>Likes</Box>
-                                </Stack>
-                            </MenuItem>
-                            <Divider sx={{ borderColor: 'white' }} />
+                            {
+                                member?._id ? (
+                                    <>
+                                        <MenuItem className="menu-item">
+                                            <Stack className="menu-item-icon" onClick={() => navigate("/my-page")}>
+                                                <Settings />
+                                                <Box>Settings</Box>
+                                            </Stack>
+                                        </MenuItem>
+                                        <MenuItem className="menu-item">
+                                            <Stack className="menu-item-icon" onClick={() => {
+                                                localStorage.setItem("value", "2")
+                                                navigate("/my-page")
+                                            }}>
+                                                <RecommendOutlined />
+                                                <Box>Likes</Box>
+                                            </Stack>
+                                        </MenuItem>
+                                        <Divider sx={{ borderColor: 'white' }} />
+                                    </>
+                                ) : null
+                            }
                             {
                                 member?._id ? null : (
                                     <MenuItem className="menu-item" onClick={registerToggleHandler}>

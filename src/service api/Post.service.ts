@@ -56,6 +56,19 @@ class PostService {
             throw err.response.data
         }
     }
+
+    public async getFavorityPosts(data: PostsInquiry): Promise<Posts> {
+        try {
+            const url = `${this.serverApi}/post/favorite-posts`
+            const response = await axios.post(url, data, {
+                withCredentials: true
+            })
+            return response.data.value
+        } catch (err: any) {
+            console.log(`Error: getFavorityPosts, ${err.response.data.message}`)
+            throw err.response.data
+        }
+    }
 }
 
 export default PostService

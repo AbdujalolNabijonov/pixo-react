@@ -126,7 +126,7 @@ const Posts = (props: any) => {
                                     </Box>
                                     <Stack className="member-name">
                                         <Box onClick={() => {
-                                            navigate(`/memberpage/${post.memberData?._id}`)
+                                            navigate(`/member/${post.memberData?._id}`)
                                         }}>{post.memberData?.memberNick}</Box>
                                         <Box>{moment(post.createdAt).format("DD MMMM, YYYY")}</Box>
                                     </Stack>
@@ -138,8 +138,8 @@ const Posts = (props: any) => {
                                         pagination={{ clickable: true }}
                                         className="image-swiper"
                                     >
-                                        {post.postImages.map((image: string) => (
-                                            <SwiperSlide className="image-slide">
+                                        {post.postImages.map((image: string, index:number) => (
+                                            <SwiperSlide className="image-slide" key={index}>
                                                 <img src={image} alt="" />
                                             </SwiperSlide>
                                         ))
