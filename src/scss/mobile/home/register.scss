@@ -17,17 +17,34 @@
       overflow: hidden;
       width: 100%;
       min-height: 450px;
+      .auth-ways {
+        flex-direction: row;
+        gap: 10px;
+        justify-content: center;
+        margin: 10px 0;
+        .auth-icon {
+          svg {
+            color: white;
+            font-size: 25px;
+          }
+          &:hover{
+            background-color: #333;
+          }
+        }
+      }
       .auth_signUp {
         width: 100%;
         transform: translateX(0%) !important;
         .signUp_body {
           color: white;
           input {
+            background-color: #1e1e1e;
+            color: white;
+            border-radius: 5px;
+            border: 1px solid rgb(92, 91, 91);
             border-radius: 5px;
             font-size: 17px;
-            background-color: #eee;
-            border: none;
-            padding: 7px 15px;
+            padding: 8px 15px;
             margin: 8px 0;
             width: 100%;
           }
@@ -57,12 +74,16 @@
             font-size: 35px;
           }
           input {
+            background-color: #1e1e1e;
+            color: white;
+            border-radius: 5px;
+            border: 1px solid rgb(92, 91, 91);
+            border-radius: 5px;
+            font-size: 17px;
             border-radius: 5px;
             font-size: 17px;
             width: 300px;
-            padding: 7px 15px;
-            background-color: #eee;
-            border: none;
+            padding: 8px 15px;
             margin: 8px 0;
           }
           .warn {
