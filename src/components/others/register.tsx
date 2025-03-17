@@ -1,11 +1,10 @@
-import React, { useCallback, useState } from "react";
-import { Box, Button, Checkbox, FormControlLabel, FormGroup, IconButton, Modal, Stack, Tooltip } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Button, IconButton, Modal, Stack, Tooltip } from "@mui/material";
 import { GitHub, Google, RemoveRedEyeRounded, VisibilityOffRounded } from "@mui/icons-material";
 import { Message } from "../../libs/Message";
 import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../libs/sweetAlert";
 import MemberService from "../../service api/Member.service";
 import { AuthModalProps } from "../../libs/types/props";
-import { useNavigate } from "react-router-dom";
 import useGlobal from "../../libs/hooks/useGlobal";
 import useDeviceDetect from "../../libs/hooks/useDeviceDetect";
 
@@ -21,7 +20,7 @@ const AuthenticateModal = (props: AuthModalProps) => {
     const [checkPassword, setCheckPassword] = React.useState("");
     const [hidden, setHidden] = useState<boolean>(true)
     const [inputType, setInputType] = useState<string>("password")
-    const { member, setMember } = useGlobal()
+    const { setMember } = useGlobal()
 
     //Handlers
     const handleSignUpRequest = async () => {
@@ -63,12 +62,12 @@ const AuthenticateModal = (props: AuthModalProps) => {
         }
     }
     const handleKeyDownSignUp = (e: any) => {
-        if (e.key == "Enter") {
+        if (e.key === "Enter") {
             handleSignUpRequest()
         }
     }
     const handleKeyDownLogIn = (e: any) => {
-        if (e.key == "Enter") {
+        if (e.key === "Enter") {
             handleLogInRequest()
         }
     }

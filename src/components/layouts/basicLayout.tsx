@@ -2,7 +2,6 @@ import { Stack } from "@mui/material"
 import React from "react"
 import Navbar from "../navbar"
 import Lifter from "../others/lifter"
-import useGlobal from "../../libs/hooks/useGlobal"
 import useDeviceDetect from "../../libs/hooks/useDeviceDetect"
 import MobileNavbar from "../navbar/mobile-navbar"
 

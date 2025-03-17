@@ -1,5 +1,5 @@
 import { AddReactionOutlined, FavoriteOutlined, QuestionAnswer, ReportGmailerrorredOutlined, Send } from "@mui/icons-material"
-import { Avatar, Box, Divider, IconButton, Menu, Modal, Pagination, Stack } from "@mui/material"
+import { Avatar, Box, Divider, IconButton, Menu, Modal, Stack } from "@mui/material"
 import EmojiPicker from 'emoji-picker-react'
 import { useState } from "react"
 import { Post } from "../../libs/types/post"
@@ -10,7 +10,7 @@ import useGlobal from "../../libs/hooks/useGlobal"
 import { Message } from "../../libs/Message"
 import CommentService from "../../service api/Comment.service"
 import { Swiper, SwiperSlide } from "swiper/react"
-import { Pagination as SPagination } from "swiper/modules"
+import { Pagination } from "swiper/modules"
 import useDeviceDetect from "../../libs/hooks/useDeviceDetect"
 
 interface CommentsInterface {
@@ -75,7 +75,7 @@ const Comments = (props: CommentsInterface) => {
                     <Box className="post-image">
                         <Swiper
                             slidesPerView={1}
-                            modules={[SPagination]}
+                            modules={[Pagination]}
                             pagination={{ clickable: true }}
                             className="comment-swiper"
                         >

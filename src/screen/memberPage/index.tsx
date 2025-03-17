@@ -1,5 +1,4 @@
 import { Box, IconButton, Stack } from "@mui/material"
-import BasicLayout from "../../components/layouts/basicLayout"
 import { FavoriteOutlined, QuestionAnswerOutlined, Settings } from "@mui/icons-material"
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';

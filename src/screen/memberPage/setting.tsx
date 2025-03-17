@@ -1,7 +1,6 @@
 import { AddAPhotoOutlined, Send } from "@mui/icons-material"
 import { Box, Button, IconButton, Modal, Stack } from "@mui/material"
 import { useEffect, useState } from "react"
-import { Member } from "../../libs/types/member"
 import MemberService from "../../service api/Member.service"
 import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../libs/sweetAlert"
 import { Message } from "../../libs/Message"

@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, IconButton, Stack } from "@mui/material"
+import { Avatar, Box, Stack } from "@mui/material"
 import { Post } from "../../libs/types/post"
 import { FavoriteOutlined, QuestionAnswerOutlined } from "@mui/icons-material"
 import { Swiper, SwiperSlide } from "swiper/react"

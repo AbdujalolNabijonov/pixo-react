@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Avatar, Box, Button, Drawer, Menu, MenuItem, Modal, Stack } from '@mui/material';
-import { ChatOutlined, Home, HomeOutlined, Search, SearchOutlined, ThumbUpAltOutlined } from '@mui/icons-material';
-import { CameraPlus, ChatsCircle, MoonStars, SignIn, SignOut } from '@phosphor-icons/react';
+import { Avatar, Box, Button, Menu, MenuItem, Modal, Stack } from '@mui/material';
+import { Home, HomeOutlined, Search, SearchOutlined, ThumbUpAltOutlined } from '@mui/icons-material';
+import { CameraPlus, ChatsCircle, SignIn, SignOut } from '@phosphor-icons/react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import AuthenticationModal from "../others/register"
 import useGlobal from '../../libs/hooks/useGlobal';

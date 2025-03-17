@@ -1,10 +1,8 @@
-import { Box, Button, Drawer, Stack } from "@mui/material"
-import BasicLayout from "../../components/layouts/basicLayout"
+import { Stack } from "@mui/material"
 import Members from "./members"
 import Posts from "./posts"
 import ChatMenu from "./chat"
 import useDeviceDetect from "../../libs/hooks/useDeviceDetect"
-import { useState } from "react"
 
 const HomePage = (props: any) => {
     const device = useDeviceDetect();
