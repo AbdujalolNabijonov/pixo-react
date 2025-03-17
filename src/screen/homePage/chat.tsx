@@ -31,7 +31,6 @@ const ChatMenu = () => {
         socket?.on("message", (data) => {
             const messages = JSON.parse(data) as NewMessage[];
             setMessages(messages)
-            console.log(messages)
         })
     }, [socket])
 
@@ -112,8 +111,21 @@ const ChatMenu = () => {
                 >
                     <EmojiPicker onEmojiClick={pickEmojiHandler} />
                 </Menu>
-                <input type="text" placeholder="Leave a comment ..." value={message} onChange={changeMessageHandler} />
-                <IconButton className="send-post" onClick={sendMessageHandler}><Send /></IconButton>
+                <input
+                    type="text"
+                    placeholder="Leave a comment ..."
+                    value={message}
+                    onChange={changeMessageHandler}
+                    onKeyDown={(e: any) => {
+                        if (e.key === "Enter") {
+                            sendMessageHandler()
+                        }
+                    }}
+                />
+                <IconButton
+                    className="send-post"
+                    onClick={sendMessageHandler}
+                ><Send /></IconButton>
             </Stack>
         </Stack>
     )

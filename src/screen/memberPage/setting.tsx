@@ -7,6 +7,7 @@ import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../libs/sweetA
 import { Message } from "../../libs/Message"
 import useGlobal from "../../libs/hooks/useGlobal"
 import { validTypes } from "../../libs/config"
+import useDeviceDetect from "../../libs/hooks/useDeviceDetect"
 
 interface SettingProps {
     openSetting: boolean
@@ -26,6 +27,7 @@ const Setting = (props: SettingProps) => {
     })
     const [disableBtn, setDisableBtn] = useState(true)
     const [file, setFile] = useState(null)
+    const device = useDeviceDetect()
 
     useEffect(() => {
         if (memberInputs.memberNick || memberInputs.memberDesc || memberInputs.memberPhone || memberInputs.memberDesc || file) {
@@ -80,7 +82,7 @@ const Setting = (props: SettingProps) => {
     return (
         <Modal
             open={openSetting}
-            className="setting-modal"
+            className={device==="mobile"?"setting-modal-mobile":"setting-modal"}
             onClose={toggleOpenSetting}
         >
             <Stack className="setting-modal-body">

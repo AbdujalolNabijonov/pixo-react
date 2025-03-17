@@ -18,7 +18,7 @@
         background: black;
         padding: 10px;
         align-items: center;
-        border-bottom: 1px solid  white;
+        border-bottom: 1px solid white;
       }
       .chat-body {
         flex: 1;
@@ -73,13 +73,13 @@
           color: white;
           outline: none;
           background-color: black;
-          padding: 10px 35px;
+          padding: 20px 39px;
           border: none;
         }
         .add-react {
           position: absolute;
           left: 0;
-          top: 5px;
+          top: 7px;
           svg {
             color: white;
           }

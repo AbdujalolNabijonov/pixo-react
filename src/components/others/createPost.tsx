@@ -8,6 +8,7 @@ import { sweetConfirmAlert, sweetErrorHandling, sweetTopSmallSuccessAlert } from
 import { Message } from "../../libs/Message"
 import PostService from "../../service api/Post.service"
 import useGlobal from "../../libs/hooks/useGlobal"
+import useDeviceDetect from "../../libs/hooks/useDeviceDetect"
 
 
 const CreatePost = (props: any) => {
@@ -18,7 +19,7 @@ const CreatePost = (props: any) => {
     const [postTitle, setPostTitle] = useState("")
     const [postContent, setPostContent] = useState("")
     const { member, setRebuild } = useGlobal()
-    const device = "mobile"
+    const device = useDeviceDetect()
 
 
     const createRequestHandler = async () => {
@@ -64,7 +65,7 @@ const CreatePost = (props: any) => {
                 open={showModal}
                 className={device === "mobile" ? "create-post-mobile" : "create-post-pc"}
             >
-                <Stack className="create-box">
+                <Stack className={"create-box"}>
                     <Box className="title">Create Post</Box>
                     <Divider sx={{ borderColor: "white" }} />
                     <CssVarsProvider>

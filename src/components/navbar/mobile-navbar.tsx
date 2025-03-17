@@ -121,7 +121,7 @@ export default function MobileNavbar() {
             <Modal
                 open={openChat}
                 onClose={toggleChat}
-                className='chat-draw'
+                className='mobile-wrapper-chat'
             >
                 <ChatMenu />
             </Modal>

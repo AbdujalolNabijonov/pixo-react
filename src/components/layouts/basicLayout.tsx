@@ -16,6 +16,7 @@ const BasicLayout: React.FC<{ Component: React.FC }> = ({ Component }) => {
                     <Stack className="mobile-wrapper">
                         <MobileNavbar />
                         <Component />
+                        <Lifter />
                     </Stack>
                 ) : (
                     <Stack className="pc-wrapper">

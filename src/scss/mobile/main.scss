@@ -14,18 +14,41 @@
 //POST
 @import "./posts/index.scss";
 
-.mobile-wrapper{
-    font-family: "Playwrite IT Moderna", cursive;
-    .pagination {
-        align-self: center;
-        margin-top: 10px;
-        margin-bottom: 80px;
-        .css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root {
-          color: white;
-        }
-        .css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
-          border-color: white;
-          color: white;
-        }
-      }
+//Member
+@import "./memberPage/index.scss";
+@import "./memberPage/setting.scss";
+
+.mobile-wrapper {
+  font-family: "Playwrite IT Moderna", cursive;
+  .pagination {
+    align-self: center;
+    margin-top: 10px;
+    margin-bottom: 80px;
+    .css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root {
+      color: white;
+    }
+    .css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
+      border-color: white;
+      color: white;
+    }
+  }
+  .lifter {
+    position: fixed;
+    right: 20px;
+    background-color: rgb(246, 149, 71);
+    z-index: 100;
+    height: 40px;
+    width: 30px;
+    bottom: 80px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    animation: lifter-anim 2s infinite ease-in;
+    box-shadow: 0 0 10px white;
+    svg {
+      color: black;
+      font-size: 20px;
+      cursor: pointer;
+    }
+  }
 }
