@@ -17,6 +17,7 @@ const Navbar = () => {
     const [showExtraMenu, setShowExtraMenu] = useState<boolean>(false)
     const [openRegister, setOpenRegister] = useState(false)
     const [showModal, setShowModal] = useState(false)
+    const [anchorEl, setAnchorEl] = useState(null)
     const { member } = useGlobal()
 
     const modalCloseHandler = () => {
@@ -29,6 +30,8 @@ const Navbar = () => {
 
     const toggleExtraMenu = (e: any) => {
         setShowExtraMenu(!showExtraMenu)
+        setAnchorEl(e.target)
+
     }
     const registerToggleHandler = (e: any) => {
         setOpenRegister(!openRegister)
@@ -95,6 +98,7 @@ const Navbar = () => {
                         <Box>More</Box>
                     </Stack>
                     <ExtraMenu
+                        anchorEl={anchorEl}
                         className="extra-menu"
                         open={Boolean(showExtraMenu)}
                         onClose={toggleExtraMenu}

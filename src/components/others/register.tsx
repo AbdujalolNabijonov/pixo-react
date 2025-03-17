@@ -1,18 +1,19 @@
 import React, { useCallback, useState } from "react";
-import { Box, Button, Checkbox, FormControlLabel, FormGroup, IconButton, Modal, Stack } from "@mui/material";
-import { RemoveRedEyeRounded, VisibilityOffRounded } from "@mui/icons-material";
+import { Box, Button, Checkbox, FormControlLabel, FormGroup, IconButton, Modal, Stack, Tooltip } from "@mui/material";
+import { GitHub, Google, RemoveRedEyeRounded, VisibilityOffRounded } from "@mui/icons-material";
 import { Message } from "../../libs/Message";
 import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../libs/sweetAlert";
 import MemberService from "../../service api/Member.service";
 import { AuthModalProps } from "../../libs/types/props";
 import { useNavigate } from "react-router-dom";
 import useGlobal from "../../libs/hooks/useGlobal";
+import useDeviceDetect from "../../libs/hooks/useDeviceDetect";
 
 
 
 const AuthenticateModal = (props: AuthModalProps) => {
     //Initilizations
-    const device: string = "mobile"
+    const device: string = useDeviceDetect()
     const { setOpenRegister, registerToggleHandler, openRegister } = props
     const [signupObj, setSignupObj] = useState({ memberNick: '', memberPhone: '', memberPassword: '', })
     const [loginObj, setLoginObj] = useState({ memberNick: '', memberPassword: '' });
@@ -88,7 +89,7 @@ const AuthenticateModal = (props: AuthModalProps) => {
         <Modal
             open={openRegister}
             onClose={registerToggleHandler}
-            className={device==="mobile"?"auth-modal-mobile":"auth-modal-pc"}
+            className={device === "mobile" ? "auth-modal-mobile" : "auth-modal-pc"}
         >
             <Stack className="join-auth">
                 <Stack className="authMain" >
@@ -124,6 +125,18 @@ const AuthenticateModal = (props: AuthModalProps) => {
                                     onKeyDown={handleKeyDownSignUp}
                                     onChange={(e) => { setCheckPassword(e.target.value) }}
                                 />
+                                <Stack className="auth-ways">
+                                    <Tooltip title="GitHub" placement="left">
+                                        <Button className="auth-icon">
+                                            <GitHub />
+                                        </Button>
+                                    </Tooltip>
+                                    <Tooltip title="Google" placement="right">
+                                        <Button className="auth-icon">
+                                            <Google />
+                                        </Button>
+                                    </Tooltip>
+                                </Stack>
                                 <Button
                                     className={"login-btn"}
                                     onClick={handleSignUpRequest}
@@ -133,7 +146,7 @@ const AuthenticateModal = (props: AuthModalProps) => {
                                 </Button>
                                 {
                                     device === "mobile" ? (
-                                        <Box sx={{ marginTop: "20px" }} onClick={() => toggle(true)}>
+                                        <Box sx={{ marginTop: "10px" }} onClick={() => toggle(true)}>
                                             I'm already a member
                                         </Box>
                                     ) : null
@@ -166,9 +179,21 @@ const AuthenticateModal = (props: AuthModalProps) => {
                                 </Stack>
                                 <div className="warn">If you forget your password, you can log in with your signed up email address </div>
                                 <Button onClick={handleLogInRequest} className="sign-btn">Sign In</Button>
+                                <Stack className="auth-ways">
+                                    <Tooltip title="GitHub">
+                                        <Button className="auth-icon">
+                                            <GitHub />
+                                        </Button>
+                                    </Tooltip>
+                                    <Tooltip title="Google">
+                                        <Button className="auth-icon">
+                                            <Google />
+                                        </Button>
+                                    </Tooltip>
+                                </Stack>
                                 {
                                     device === "mobile" ? (
-                                        <Box sx={{ marginTop: "20px" }} onClick={() => toggle(false)}>
+                                        <Box sx={{ marginTop: "10px" }} onClick={() => toggle(false)}>
                                             Create an account
                                         </Box>
                                     ) : null
