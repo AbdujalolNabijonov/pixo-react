@@ -6,15 +6,17 @@ html {
   user-select: none;
   font-family: "Playwrite IT Moderna", cursive;
 }
-.pagination {
-  align-self: center;
-  margin: 30px 0;
-  .css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root {
-    color: white;
-  }
-  .css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
-    border-color: white;
-    color: white;
+.pc-wrapper{
+  .pagination {
+    align-self: center;
+    margin: 30px 0;
+    .css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root {
+      color: white;
+    }
+    .css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
+      border-color: white;
+      color: white;
+    }
   }
 }
 

@@ -6,10 +6,12 @@ import { useEffect, useState } from "react"
 import MemberService from "../../service api/Member.service"
 import { sweetErrorHandling } from "../../libs/sweetAlert"
 import { useNavigate } from "react-router-dom"
+import useDeviceDetect from "../../libs/hooks/useDeviceDetect"
 
 const Members = (props: any) => {
     const [members, setMembers] = useState<Member[]>([])
     const navigate = useNavigate()
+    const device = useDeviceDetect()
     useEffect(() => {
         const memberService = new MemberService()
         memberService.getMembers().then((members: MemberList) => {
@@ -22,7 +24,7 @@ const Members = (props: any) => {
         <Stack className="members">
             <Swiper
                 className="swiper"
-                slidesPerView={6}
+                slidesPerView={device === "mobile" ? 3 : 6}
                 modules={[Navigation]}
                 navigation={true}
             >
@@ -30,12 +32,12 @@ const Members = (props: any) => {
                     members.map((member: Member, index: number) => {
                         const imageUrl = member.memberImage ? `${member.memberImage}` : "/imgs/default-user.jpg"
                         return (
-                            <SwiperSlide 
-                            className="member" 
-                            key={index}
-                            onClick={()=>{
-                                navigate(`/member/${member._id}`)
-                            }}
+                            <SwiperSlide
+                                className="member"
+                                key={index}
+                                onClick={() => {
+                                    navigate(`/member/${member._id}`)
+                                }}
                             >
                                 <Box className="member-image">
                                     <Box className="image-wrapper">

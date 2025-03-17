@@ -104,6 +104,9 @@ const Posts = (props: any) => {
                 setRebuildComments(new Date())
             }
         } catch (err: any) {
+            if (opeenModal) {
+                setOpenModal(false)
+            }
             await sweetErrorHandling(err)
         }
     }
@@ -138,7 +141,7 @@ const Posts = (props: any) => {
                                         pagination={{ clickable: true }}
                                         className="image-swiper"
                                     >
-                                        {post.postImages.map((image: string, index:number) => (
+                                        {post.postImages.map((image: string, index: number) => (
                                             <SwiperSlide className="image-slide" key={index}>
                                                 <img src={image} alt="" />
                                             </SwiperSlide>
@@ -149,7 +152,7 @@ const Posts = (props: any) => {
                                 <Stack className="post-footer">
                                     <Stack className="post-stats">
                                         <Stack className="post-stats-item">
-                                            <Button onClick={() => likeTargetPostHandler(post._id)}>
+                                            <Button onClick={() => likeTargetPostHandler(post._id)} className="m-btn">
                                                 <FavoriteOutlined
                                                     sx={post.meLiked[0]?.meLiked ? { fill: "red" } : { fill: "white" }}
                                                 />

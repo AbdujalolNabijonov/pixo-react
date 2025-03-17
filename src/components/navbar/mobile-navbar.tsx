@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { Avatar, Box, Button, Menu, MenuItem, Stack } from '@mui/material';
-import { Home, HomeOutlined, Search, SearchOutlined, ThumbUpAltOutlined } from '@mui/icons-material';
-import { CameraPlus, MoonStars, SignIn, SignOut } from '@phosphor-icons/react';
+import { Avatar, Box, Button, Drawer, Menu, MenuItem, Modal, Stack } from '@mui/material';
+import { ChatOutlined, Home, HomeOutlined, Search, SearchOutlined, ThumbUpAltOutlined } from '@mui/icons-material';
+import { CameraPlus, ChatsCircle, MoonStars, SignIn, SignOut } from '@phosphor-icons/react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import AuthenticationModal from "../others/register"
 import useGlobal from '../../libs/hooks/useGlobal';
 import { sweetErrorHandling, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
 import MemberService from '../../service api/Member.service';
 import CreatePost from '../others/createPost';
+import ChatMenu from '../../screen/homePage/chat';
 
 export default function MobileNavbar() {
     const router = useLocation()
@@ -16,8 +17,12 @@ export default function MobileNavbar() {
     const [anchorEl, setAnchorEl] = useState(null)
     const [openRegister, setOpenRegister] = useState(false)
     const [openModal, setOpenModal] = useState(false)
+    const [openChat, setOpenChat] = useState(false)
     const { member } = useGlobal()
 
+    const toggleChat = () => {
+        setOpenChat(!openChat)
+    }
     const gotoHandler = (path: string) => {
         navigate(path)
     }
@@ -65,8 +70,8 @@ export default function MobileNavbar() {
             <Button className='nav-item' onClick={modalCloseHandler}>
                 <CameraPlus />
             </Button>
-            <Button className='nav-item'>
-                <MoonStars />
+            <Button className='nav-item' onClick={toggleChat}>
+                <ChatsCircle />
             </Button>
             {
                 member?._id ? (
@@ -113,6 +118,13 @@ export default function MobileNavbar() {
                 openRegister={openRegister}
                 setOpenRegister={setOpenRegister}
             />
+            <Modal
+                open={openChat}
+                onClose={toggleChat}
+                className='chat-draw'
+            >
+                <ChatMenu />
+            </Modal>
             <CreatePost showModal={openModal} modalCloseHandler={modalCloseHandler} />
         </Stack>
     );

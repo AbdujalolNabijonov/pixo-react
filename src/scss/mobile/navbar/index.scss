@@ -4,6 +4,7 @@
   font-family: "Playwrite IT Moderna", cursive;
   .mobile-nav {
     position: fixed;
+    z-index: 1000;
     flex-direction: row;
     bottom: 0;
     background-color: #14181b;

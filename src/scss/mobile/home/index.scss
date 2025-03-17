@@ -1,0 +1,75 @@
+.mobile-wrapper{
+    .home-page{
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        color: white;
+        .members {
+            position: relative;
+            display: flex;
+            .swiper-button-prev,
+            .swiper-button-next{
+              background-color: rgb(129, 125, 125);
+              height: 30px;
+              width: 30px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              position: absolute;
+              border-radius: 50%;
+              font-size: 10px;
+              z-index: 10;
+              &::after{
+                font-size: 20px;
+                font-weight: bold;
+                color: white;
+              }
+            }
+            .swiper {
+              width: 100%;
+              height: auto;
+              padding: 10px 24px;
+              flex-wrap: wrap;
+              .member {
+                width: 100px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                cursor: pointer;
+                .member-image {
+                  height: 70px;
+                  width: 70px;
+                  border-radius: 50%;
+                  border: 3px solid transparent;
+                  background: linear-gradient(
+                    45deg,
+                    rgb(218, 58, 239),
+                    rgb(241, 60, 60),
+                    rgb(255, 255, 92)
+                  );
+                  overflow: hidden;
+                  border-image-slice: 1;
+                  box-sizing: border-box;
+                  .image-wrapper {
+                    height: 100%;
+                    width: 100%;
+                    border: 3px solid black;
+                    border-radius: 50%;
+                    overflow: hidden;
+                    img {
+                      width: 100%;
+                      border-radius: 50%;
+                      height: 100%;
+                    }
+                  }
+                }
+                .member-name {
+                  text-align: center;
+                  font-size: 12px;
+                }
+              }
+            }
+          }
+    }
+}

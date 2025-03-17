@@ -11,6 +11,7 @@ import { Message } from "../../libs/Message"
 import CommentService from "../../service api/Comment.service"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Pagination as SPagination } from "swiper/modules"
+import useDeviceDetect from "../../libs/hooks/useDeviceDetect"
 
 interface CommentsInterface {
     openComment: boolean
@@ -32,6 +33,7 @@ const Comments = (props: CommentsInterface) => {
     const [openEmojiAnchor, setOpenEmojiAnchor] = useState(null)
     const [comment, setComment] = useState("")
     const { member } = useGlobal()
+    const device = useDeviceDetect()
 
     const submitCommentRequest = async () => {
         try {
@@ -67,7 +69,7 @@ const Comments = (props: CommentsInterface) => {
             <Modal
                 open={openComment}
                 onClose={toggleCommentModal}
-                className={"comment-modal"}
+                className={device === "mobile" ? "comment-modal-mobile" : "comment-modal"}
             >
                 <Stack className="main-box">
                     <Box className="post-image">

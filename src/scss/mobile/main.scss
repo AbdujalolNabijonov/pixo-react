@@ -3,10 +3,26 @@
 
 //Home
 @import "./home/register.scss";
+@import "./home/index.scss";
+@import "./home/chatMenu.scss";
+@import "./home/posts.scss";
+@import "./home/comments.scss";
 
 //CreatePost
 @import "./createpost/index.scss";
 
 .mobile-wrapper{
     font-family: "Playwrite IT Moderna", cursive;
+    .pagination {
+        align-self: center;
+        margin-top: 10px;
+        margin-bottom: 80px;
+        .css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root {
+          color: white;
+        }
+        .css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
+          border-color: white;
+          color: white;
+        }
+      }
 }

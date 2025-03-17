@@ -105,4 +105,4 @@ const MemberPage = () => {
     )
 }
 
-export default BasicLayout(MemberPage)
+export default MemberPage

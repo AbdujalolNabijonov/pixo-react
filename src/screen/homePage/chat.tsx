@@ -10,6 +10,7 @@ import useGlobal from "../../libs/hooks/useGlobal"
 import moment from "moment"
 import { sweetErrorHandling } from "../../libs/sweetAlert"
 import { Message } from "../../libs/Message"
+import useDeviceDetect from "../../libs/hooks/useDeviceDetect"
 
 const ChatMenu = () => {
     const [openEmojiAnchor, setOpenEmojiAnchor] = useState(null)
@@ -17,6 +18,7 @@ const ChatMenu = () => {
     const [messages, setMessages] = useState<NewMessage[]>([])
     const [totalClients, setTotalClients] = useState<number>(0)
     const cookie = new Cookies();
+    const device = useDeviceDetect()
     const token = cookie.get("accessToken")
     const socket = useSocket(token)
     const { member } = useGlobal()
@@ -75,7 +77,7 @@ const ChatMenu = () => {
                             console.log(message.memberData?.memberImage)
                             return (
                                 <Stack className="msg-left msg">
-                                    <Avatar src={message.memberData?.memberImage??"/imgs/default-user.jpg"} />
+                                    <Avatar src={message.memberData?.memberImage ?? "/imgs/default-user.jpg"} />
                                     <Stack className="msg-body">
                                         <Box className="member-name">{message.memberData?.memberNick ?? "GUEST"}</Box>
                                         <Box className="msg-content">{message.message}</Box>
@@ -98,7 +100,11 @@ const ChatMenu = () => {
                 }
             </Stack>
             <Stack className="chat-footer">
-                <IconButton className="add-react" onClick={toggleOpenEmoji}><AddReactionOutlined /></IconButton>
+                {
+                    device === "desktop" ? (
+                        <IconButton className="add-react" onClick={toggleOpenEmoji}><AddReactionOutlined /></IconButton>
+                    ) : null
+                }
                 <Menu
                     anchorEl={openEmojiAnchor}
                     open={Boolean(openEmojiAnchor)}

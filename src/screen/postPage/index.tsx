@@ -146,4 +146,4 @@ const PostPage = () => {
     )
 }
 
-export default BasicLayout(PostPage)
+export default PostPage

@@ -2,30 +2,32 @@ import { Stack } from "@mui/material"
 import React from "react"
 import Navbar from "../navbar"
 import Lifter from "../others/lifter"
+import useGlobal from "../../libs/hooks/useGlobal"
 import useDeviceDetect from "../../libs/hooks/useDeviceDetect"
 import MobileNavbar from "../navbar/mobile-navbar"
 
-const BasicLayout = (Component: React.FC) => {
-    const device:string = "mobile"
-    return (props: any) => {
-        if (device === "mobile") {
-            return (
-                <Stack className="mobile-wrapper">
-                    <MobileNavbar />
-                    {/* <Component />
-                    <Lifter /> */}
-                </Stack>
-            )
-        } else {
-            return (
-                <Stack className="pc-wrapper" flexDirection={"row"}>
-                    <Navbar />
-                    <Component />
-                    <Lifter />
-                </Stack>
-            )
-        }
-    }
+const BasicLayout: React.FC<{ Component: React.FC }> = ({ Component }) => {
+    const device = useDeviceDetect()
+
+    return (
+        <>
+            {
+                device === "mobile" ? (
+                    <Stack className="mobile-wrapper">
+                        <MobileNavbar />
+                        <Component />
+                    </Stack>
+                ) : (
+                    <Stack className="pc-wrapper">
+                        <Navbar />
+                        <Component />
+                        <Lifter />
+                    </Stack>
+                )
+            }
+
+        </>
+    )
 }
 
 export default BasicLayout
