@@ -8,11 +8,11 @@ import { useNavigate } from "react-router-dom"
 interface PostCardProps {
     post: Post;
     toggleCommentModal: any
-    likeTargetPostHandler:any
+    likeTargetPostHandler: any
 }
 
 const PostCard = (props: PostCardProps) => {
-    const { post, toggleCommentModal,likeTargetPostHandler } = props
+    const { post, toggleCommentModal, likeTargetPostHandler } = props
     const navigate = useNavigate()
     return (
         <Box className={`explore-item`} key={"1"}>
@@ -30,9 +30,10 @@ const PostCard = (props: PostCardProps) => {
                 </Stack>
                 <Stack className="stats-items">
                     <Stack className="stats-item">
-                        <Box onClick={()=>likeTargetPostHandler(post._id)}>
-                            <FavoriteOutlined sx={post.meLiked[0]?.meLiked ? { fill: "red" } : { fill: "white" }} />
-                        </Box>
+                        <FavoriteOutlined
+                            sx={post.meLiked[0]?.meLiked ? { fill: "red" } : { fill: "white" }}
+                            onClick={() => likeTargetPostHandler(post._id)}
+                        />
                         <Box>{post.postLikes}</Box>
                     </Stack>
                     <Stack className="stats-item">
