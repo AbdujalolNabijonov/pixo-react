@@ -1,0 +1,142 @@
+.auth-modal-mobile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Playwrite IT Moderna", cursive;
+  .authMain {
+    height: auto;
+    background: #262626;
+    position: relative;
+    width: 95vw;
+    border-radius: 10px;
+    .auth_container {
+      border-radius: 20px;
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
+        0 10px 10px rgba(0, 0, 0, 0.22);
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      min-height: 450px;
+      .auth_signUp {
+        width: 100%;
+        transform: translateX(0%) !important;
+        .signUp_body {
+          color: white;
+          input {
+            border-radius: 5px;
+            font-size: 17px;
+            background-color: #eee;
+            border: none;
+            padding: 7px 15px;
+            margin: 8px 0;
+            width: 100%;
+          }
+          .login_title {
+            font-weight: bold;
+            font-size: 30px;
+          }
+          .login-btn {
+            width: 70%;
+            cursor: pointer;
+            padding: 5px 15px;
+            font-size: 17px;
+            border-radius: 5px;
+            background-color: #eb6753;
+            border: none;
+            color: white;
+            letter-spacing: 1px;
+          }
+        }
+      }
+      .auth_logIn {
+        width: 100%;
+        .logIn_body {
+          color: white;
+          .title {
+            font-weight: bold;
+            font-size: 35px;
+          }
+          input {
+            border-radius: 5px;
+            font-size: 17px;
+            width: 300px;
+            padding: 7px 15px;
+            background-color: #eee;
+            border: none;
+            margin: 8px 0;
+          }
+          .warn {
+            font-size: 14px;
+            margin: 10px 0;
+          }
+          .form-floating {
+            position: relative;
+            flex-direction: row;
+            .password-visible {
+              position: absolute;
+              right: 20px;
+              height: 30px;
+              width: 20px;
+              border-radius: 50%;
+              top: 12px;
+              color: gray;
+            }
+          }
+          .sign-btn {
+            width: 70%;
+            cursor: pointer;
+            padding: 5px 15px;
+            letter-spacing: 1px;
+            font-size: 17px;
+            border-radius: 5px;
+            background-color: #eb6753;
+            border: none;
+            color: white;
+          }
+        }
+      }
+    }
+  }
+
+  .auth_signUp {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    transition: all 0.1s ease-in-out;
+    left: 0;
+    width: 50%;
+    opacity: 0;
+    z-index: 1;
+  }
+
+  .auth_logIn {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    transition: all 0.1s ease-in-out;
+    left: 0;
+    width: 50%;
+    z-index: 2;
+  }
+
+  .signUp_body,
+  .logIn_body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 50px;
+    height: 100%;
+    text-align: center;
+  }
+  .auth_anchor {
+    color: #333;
+    font-size: 14px;
+    text-decoration: none;
+    margin: 15px 0;
+  }
+
+  .auth_overlay {
+    display: none;
+  }
+}

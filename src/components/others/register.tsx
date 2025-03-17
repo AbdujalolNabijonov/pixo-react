@@ -12,7 +12,7 @@ import useGlobal from "../../libs/hooks/useGlobal";
 
 const AuthenticateModal = (props: AuthModalProps) => {
     //Initilizations
-    const device: string = "desktop"
+    const device: string = "mobile"
     const { setOpenRegister, registerToggleHandler, openRegister } = props
     const [signupObj, setSignupObj] = useState({ memberNick: '', memberPhone: '', memberPassword: '', })
     const [loginObj, setLoginObj] = useState({ memberNick: '', memberPassword: '' });
@@ -39,6 +39,7 @@ const AuthenticateModal = (props: AuthModalProps) => {
             const memberService = new MemberService()
             const member = await memberService.signupRequest(signupObj)
             setMember(member)
+            setOpenRegister(false)
             await sweetTopSmallSuccessAlert(Message.SUCCESS_AUTH, 1000, true)
         } catch (err: any) {
             setOpenRegister(false)
@@ -53,6 +54,7 @@ const AuthenticateModal = (props: AuthModalProps) => {
             const memberService = new MemberService()
             const member = await memberService.loginRequest(loginObj);
             setMember(member)
+            setOpenRegister(false)
             await sweetTopSmallSuccessAlert(Message.SUCCESS_AUTH, 1000, true)
         } catch (err: any) {
             setOpenRegister(false)
@@ -86,7 +88,7 @@ const AuthenticateModal = (props: AuthModalProps) => {
         <Modal
             open={openRegister}
             onClose={registerToggleHandler}
-            className="auth-modal"
+            className={device==="mobile"?"auth-modal-mobile":"auth-modal-pc"}
         >
             <Stack className="join-auth">
                 <Stack className="authMain" >

@@ -1,16 +1,19 @@
-import { Box, Stack } from "@mui/material"
+import { Stack } from "@mui/material"
 import React from "react"
 import Navbar from "../navbar"
 import Lifter from "../others/lifter"
+import useDeviceDetect from "../../libs/hooks/useDeviceDetect"
+import MobileNavbar from "../navbar/mobile-navbar"
 
 const BasicLayout = (Component: React.FC) => {
+    const device:string = "mobile"
     return (props: any) => {
-        const device: string = "desktop"
         if (device === "mobile") {
             return (
                 <Stack className="mobile-wrapper">
-                    <Component />
-                    <Navbar />
+                    <MobileNavbar />
+                    {/* <Component />
+                    <Lifter /> */}
                 </Stack>
             )
         } else {

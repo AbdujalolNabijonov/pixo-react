@@ -17,7 +17,8 @@ const CreatePost = (props: any) => {
     const fileTypes = ["JPG", "PNG", "JPEG"]
     const [postTitle, setPostTitle] = useState("")
     const [postContent, setPostContent] = useState("")
-    const { member,setRebuild } = useGlobal()
+    const { member, setRebuild } = useGlobal()
+    const device = "mobile"
 
 
     const createRequestHandler = async () => {
@@ -61,7 +62,7 @@ const CreatePost = (props: any) => {
             <Modal
                 onClose={modalCloseHandler}
                 open={showModal}
-                className="create-post"
+                className={device === "mobile" ? "create-post-mobile" : "create-post-pc"}
             >
                 <Stack className="create-box">
                     <Box className="title">Create Post</Box>

@@ -1,0 +1,119 @@
+import React, { useState } from 'react';
+import { Avatar, Box, Button, Menu, MenuItem, Stack } from '@mui/material';
+import { Home, HomeOutlined, Search, SearchOutlined, ThumbUpAltOutlined } from '@mui/icons-material';
+import { CameraPlus, MoonStars, SignIn, SignOut } from '@phosphor-icons/react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import AuthenticationModal from "../others/register"
+import useGlobal from '../../libs/hooks/useGlobal';
+import { sweetErrorHandling, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
+import MemberService from '../../service api/Member.service';
+import CreatePost from '../others/createPost';
+
+export default function MobileNavbar() {
+    const router = useLocation()
+    const navigate = useNavigate()
+    const [openMenu, setOpenMenu] = useState(false)
+    const [anchorEl, setAnchorEl] = useState(null)
+    const [openRegister, setOpenRegister] = useState(false)
+    const [openModal, setOpenModal] = useState(false)
+    const { member } = useGlobal()
+
+    const gotoHandler = (path: string) => {
+        navigate(path)
+    }
+    const toggleMenuHandler = (e: any) => {
+        setOpenMenu(!openMenu)
+        setAnchorEl(e.target)
+    }
+    const registerToggleHandler = () => {
+        setOpenRegister(!openRegister)
+    }
+    const modalCloseHandler = () => {
+        setOpenModal(!openModal)
+    }
+    const logoutHandler = async () => {
+        try {
+            const memberService = new MemberService()
+            await memberService.logout()
+            setOpenMenu(false)
+            await sweetTopSmallSuccessAlert("Logged out", 1000, true)
+        } catch (err: any) {
+            setOpenMenu(false)
+            await sweetErrorHandling(err)
+        }
+    }
+    return (
+        <Stack className='mobile-nav'>
+            <Button className='nav-item' onClick={() => gotoHandler("/")}>
+                {
+                    router.pathname === "/" ? (
+                        <Home />
+                    ) : (
+                        <HomeOutlined />
+                    )
+                }
+            </Button>
+            <Button className='nav-item' onClick={() => gotoHandler("/posts")}>
+                {
+                    router.pathname === "/posts" ? (
+                        <Search />
+                    ) : (
+                        <SearchOutlined />
+                    )
+                }
+            </Button>
+            <Button className='nav-item' onClick={modalCloseHandler}>
+                <CameraPlus />
+            </Button>
+            <Button className='nav-item'>
+                <MoonStars />
+            </Button>
+            {
+                member?._id ? (
+                    <Button className='nav-item'
+                        onClick={(e: any) => {
+                            toggleMenuHandler(e)
+                        }}
+                    >
+                        <Avatar src={member.memberImage ? member.memberImage : "/imgs/default-user.jpg"} />
+                        <Menu
+                            anchorEl={anchorEl}
+                            open={openMenu}
+                            onClose={toggleMenuHandler}
+                            className='mobile-nav-menu'
+                        >
+                            <MenuItem className='menu-item' onClick={() => gotoHandler("/my-page")}>
+                                <Stack className='menu-item-stack'>
+                                    <Avatar src={member.memberImage ? member.memberImage : "/imgs/default-user.jpg"} />
+                                    <Box>My Profile</Box>
+                                </Stack>
+                            </MenuItem>
+                            <MenuItem className='menu-item'>
+                                <Stack className='menu-item-stack'>
+                                    <ThumbUpAltOutlined />
+                                    <Box>Likes</Box>
+                                </Stack>
+                            </MenuItem>
+                            <MenuItem onClick={logoutHandler} className='menu-item'>
+                                <Stack className='menu-item-stack'>
+                                    <SignOut />
+                                    <Box>Log Out</Box>
+                                </Stack>
+                            </MenuItem>
+                        </Menu>
+                    </Button>
+                ) : (
+                    <Button className='nav-item' onClick={registerToggleHandler}>
+                        <SignIn />
+                    </Button>
+                )
+            }
+            <AuthenticationModal
+                registerToggleHandler={registerToggleHandler}
+                openRegister={openRegister}
+                setOpenRegister={setOpenRegister}
+            />
+            <CreatePost showModal={openModal} modalCloseHandler={modalCloseHandler} />
+        </Stack>
+    );
+}
