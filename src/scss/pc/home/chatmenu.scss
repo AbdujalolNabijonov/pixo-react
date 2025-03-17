@@ -1,95 +1,96 @@
-.chat-draw {
-  display: flex;
-  justify-content: center;
-  height: 100%;
-  align-items: center;
-  .chat-menu {
-    font-family: "Playwrite IT Moderna", cursive;
-    height: 70%;
-    width: 350px;
-    border-radius: 5px;
-    overflow: hidden;
-    box-sizing: border-box;
-    .chat-head {
-      color: rgb(207, 203, 203);
-      font-weight: 600;
-      flex-direction: row;
-      gap: 20px;
-      background: black;
-      padding: 10px;
-      align-items: center;
-      border-bottom: 1px solid white;
-    }
-    .chat-body {
-      flex: 1;
-      background-image: url("../../../../public/imgs/moon.jpg");
-      background-size: cover;
-      width: 100%;
-      padding: 5px;
-      overflow: auto;
-      .msg {
+.pc-wrapper {
+  .home-page {
+    .chat-menu {
+      font-family: "Playwrite IT Moderna", cursive;
+      position: fixed;
+      right: 10px;
+      top: 120px;
+      height: 500px;
+      width: 350px;
+      border-radius: 5px;
+      overflow: hidden;
+      box-sizing: border-box;
+      .chat-head {
+        color: rgb(207, 203, 203);
+        font-weight: 600;
         flex-direction: row;
-        gap: 5px;
-        align-items: end;
-        margin: 10px 0;
-        .msg-body {
-          background-color: gray;
-          padding: 5px;
-          .member-name {
-            color: black;
-            font-size: 12px;
-            font-weight: bold;
-            align-self: flex-start;
+        gap: 20px;
+        background: black;
+        padding: 10px;
+        align-items: center;
+        border-bottom: 1px solid  white;
+      }
+      .chat-body {
+        flex: 1;
+        background-image: url("../../../../public/imgs/moon.jpg");
+        background-size: cover;
+        width: 100%;
+        padding: 5px;
+        overflow: auto;
+        .msg {
+          flex-direction: row;
+          gap: 5px;
+          align-items: end;
+          margin: 10px 0;
+          .msg-body {
+            background-color: gray;
+            padding: 5px;
+            .member-name {
+              color: black;
+              font-size: 12px;
+              font-weight: bold;
+              align-self: flex-start;
+            }
+            .msg-content {
+              word-break: break-word;
+              overflow-wrap: break-word;
+              width: 200px;
+            }
+            .msg-date {
+              color: black;
+              font-size: 12px;
+              align-self: flex-end;
+            }
           }
-          .msg-content {
-            word-break: break-word;
-            overflow-wrap: break-word;
-            width: 200px;
+        }
+        .msg-right {
+          align-self: flex-end;
+          .msg-body {
+            border-radius: 5px 5px 0 5px;
           }
-          .msg-date {
-            color: black;
-            font-size: 12px;
-            align-self: flex-end;
+        }
+        .msg-left {
+          align-self: flex-start;
+          .msg-body {
+            border-radius: 5px 5px 5px 0;
           }
         }
       }
-      .msg-right {
-        align-self: flex-end;
-        .msg-body {
-          border-radius: 5px 5px 0 5px;
-        }
-      }
-      .msg-left {
-        align-self: flex-start;
-        .msg-body {
-          border-radius: 5px 5px 5px 0;
-        }
-      }
-    }
-    .chat-footer {
-      position: relative;
-      border-top: 1px solid white;
-      input {
-        color: white;
-        outline: none;
-        background-color: black;
-        padding: 15px 35px 15px 10px;
-        border: none;
-      }
-      .add-react {
-        position: absolute;
-        left: 0;
-        top: 5px;
-        svg {
+      .chat-footer {
+        position: relative;
+        border-top: 1px solid white;
+        input {
           color: white;
+          outline: none;
+          background-color: black;
+          padding: 10px 35px;
+          border: none;
         }
-      }
-      .send-post {
-        position: absolute;
-        right: 0;
-        top: 5px;
-        svg {
-          color: white;
+        .add-react {
+          position: absolute;
+          left: 0;
+          top: 5px;
+          svg {
+            color: white;
+          }
+        }
+        .send-post {
+          position: absolute;
+          right: 0;
+          top: 5px;
+          svg {
+            color: white;
+          }
         }
       }
     }
