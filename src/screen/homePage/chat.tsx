@@ -72,6 +72,7 @@ const ChatMenu = () => {
                 {
                     messages.map((message: NewMessage) => {
                         if (message.memberData?._id !== member?._id) {
+                            console.log(message.memberData?.memberImage)
                             return (
                                 <Stack className="msg-left msg">
                                     <Avatar src={message.memberData?.memberImage??"/imgs/default-user.jpg"} />
