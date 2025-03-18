@@ -34,11 +34,13 @@ const Comments = (props: CommentsInterface) => {
     const [comment, setComment] = useState("")
     const { member } = useGlobal()
     const device = useDeviceDetect()
+    const [disableBtn,setDisableBtn]=useState(false)
 
     const submitCommentRequest = async () => {
         try {
             if (!member?._id) throw new Error(Message.AUTHENTICATE_FIRST);
             if (!comment) throw new Error(Message.FULL_FILL_INPUTS);
+            setDisableBtn(true)
             const commentService = new CommentService()
             await commentService.createComment({ commentContent: comment, commentTargetId: targetPost?._id as string });
             await sweetTopSmallSuccessAlert("Successfully commented!")
@@ -47,6 +49,8 @@ const Comments = (props: CommentsInterface) => {
         } catch (err: any) {
             toggleCommentModal()
             await sweetErrorHandling(err)
+        } finally{
+            setDisableBtn(false)
         }
     }
 
@@ -158,7 +162,7 @@ const Comments = (props: CommentsInterface) => {
                                 <EmojiPicker onEmojiClick={pickEmojiHandler} />
                             </Menu>
                             <input type="text" placeholder="Leave a comment ..." value={comment} onChange={commentHandler} />
-                            <IconButton className="send-post" onClick={submitCommentRequest}><Send /></IconButton>
+                            <IconButton className="send-post" onClick={submitCommentRequest} disabled={disableBtn}><Send /></IconButton>
                         </Stack>
                     </Stack>
                 </Stack>

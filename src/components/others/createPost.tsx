@@ -49,6 +49,8 @@ const CreatePost = (props: any) => {
         } catch (err: any) {
             modalCloseHandler()
             await sweetErrorHandling(err)
+        } finally{
+            setDisableBtn(false)
         }
     }
 
