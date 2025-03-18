@@ -5,20 +5,17 @@ import MemberService from "../../service api/Member.service"
 import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../libs/sweetAlert"
 import { Message } from "../../libs/Message"
 import useGlobal from "../../libs/hooks/useGlobal"
-import { validTypes } from "../../libs/config"
 import useDeviceDetect from "../../libs/hooks/useDeviceDetect"
 
 interface SettingProps {
     openSetting: boolean
     toggleOpenSetting: any
-    setRebuild: any
 }
 
 const Setting = (props: SettingProps) => {
-    const { member } = useGlobal()
-    const { openSetting, toggleOpenSetting, setRebuild } = props;
-    const { setMember } = useGlobal()
-    const [image, setImage] = useState(member?.memberImage ?? "")
+    const { member, setMember } = useGlobal()
+    const { openSetting, toggleOpenSetting } = props;
+    const [image, setImage] = useState("")
     const [memberInputs, setMemberInputs] = useState({
         memberNick: '',
         memberPhone: "",
@@ -39,7 +36,7 @@ const Setting = (props: SettingProps) => {
     const changeImageHandler = async (e: any) => {
         try {
             const type = e.target.files[0].type
-            if (!validTypes.includes(type)) throw new Error(Message.IMAGE_FORMAT)
+            if (!type.includes("image")) throw new Error(Message.IMAGE_FORMAT)
             setFile(e.target.files[0])
             const imageUrl = URL.createObjectURL(e.target.files[0])
             setImage(imageUrl)
@@ -69,10 +66,10 @@ const Setting = (props: SettingProps) => {
             if (memberInputs.memberDesc) formData.append("memberDesc", memberInputs.memberDesc)
             if (file) formData.append("memberImage", file)
             const member = await memberService.updateMember(formData);
+            localStorage.setItem("member", JSON.stringify(member))
             setMember(member)
             toggleOpenSetting()
-            await sweetTopSmallSuccessAlert(Message.UPDATED_DATA)
-            setRebuild(new Date())
+            await sweetTopSmallSuccessAlert(Message.UPDATED_DATA, 1000)
         } catch (err: any) {
             toggleOpenSetting()
             await sweetErrorHandling(err)
@@ -81,13 +78,13 @@ const Setting = (props: SettingProps) => {
     return (
         <Modal
             open={openSetting}
-            className={device==="mobile"?"setting-modal-mobile":"setting-modal"}
+            className={device === "mobile" ? "setting-modal-mobile" : "setting-modal"}
             onClose={toggleOpenSetting}
         >
             <Stack className="setting-modal-body">
                 <Stack className="setting-head">
                     <Box className="member-image">
-                        <img src={image ?? "/imgs/default-user.jpg"} alt="members" />
+                        <img src={image ? image : member?.memberImage ? member?.memberImage : "/imgs/default-user.jpg"} alt="members" />
                         <IconButton className="add-photo">
                             <AddAPhotoOutlined />
                             <input type="file" onChange={changeImageHandler} />

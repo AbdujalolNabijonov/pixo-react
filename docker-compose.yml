@@ -12,7 +12,7 @@ services:
     networks:
       - app-network
     
-    command: bash -c "yarn install && yarn run build && yarn run start"
+    command: bash -c "yarn run build && yarn run start"
 
 networks:
   app-network:

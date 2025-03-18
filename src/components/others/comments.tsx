@@ -119,10 +119,6 @@ const Comments = (props: CommentsInterface) => {
                                                         <Box>{moment(comment.createdAt).format("DD MMMM, YYYY")}</Box>
                                                     </Stack>
                                                 </Stack>
-                                                <Stack className="post-stat">
-                                                    <FavoriteOutlined sx={{ fill: "red" }} />
-                                                    <Box>{comment.commentLikes}</Box>
-                                                </Stack>
                                             </Stack>
                                             <Box className="comment-content">
                                                 {comment.commentContent}

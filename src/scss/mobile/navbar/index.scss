@@ -1,7 +1,6 @@
 .mobile-wrapper {
   background-color: #14181b;
   position: relative;
-  font-family: "Playwrite IT Moderna", cursive;
   .mobile-nav {
     position: fixed;
     z-index: 1000;
@@ -22,31 +21,34 @@
 }
 
 .mobile-nav-menu {
-    .css-6hp17o-MuiList-root-MuiMenu-list{
-        padding: 0;
-        border: none;
+  .css-6hp17o-MuiList-root-MuiMenu-list {
+    background-color: #14181b;
+  }
+  .css-6hp17o-MuiList-root-MuiMenu-list {
+    padding: 0;
+    border: none;
+  }
+  .menu-item {
+    padding: 0;
+    margin: 0;
+    background-color: #14181b;
+    color: white;
+    padding: 10px 20px;
+    &:hover {
+      background-color: #1d2225;
     }
-    .menu-item{
-        padding: 0;
-        margin: 0;
-        background-color: #14181b;
-        color: white;
-        padding: 10px 20px;
-        &:hover{
-            background-color: #1d2225;
-        }
-        .menu-item-stack{
-            flex-direction: row;
-            gap: 10px;
-            align-items: center;
-            justify-content: space-between;
-            svg{
-                font-size: 30px;
-            }
-            .MuiAvatar-circular{
-                width: 30px;
-                height: 30px;
-            }
-        }
+    .menu-item-stack {
+      flex-direction: row;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      svg {
+        font-size: 30px;
+      }
+      .MuiAvatar-circular {
+        width: 30px;
+        height: 30px;
+      }
     }
+  }
 }

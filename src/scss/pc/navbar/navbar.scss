@@ -8,7 +8,6 @@
     color: white;
     padding: 15px;
     justify-content: space-between;
-    font-family: "Playwrite IT Moderna", cursive;
     .navbar-items {
       .title {
         font-size: 30px;
@@ -23,7 +22,6 @@
       margin-bottom: 10px;
       border-radius: 10px;
       transition: background-color 0.1s ease-in-out;
-      font-family: "Playwrite IT Moderna", cursive;
       &:hover {
         background-color: #1a1a1a;
       }

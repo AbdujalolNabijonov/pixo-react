@@ -1,4 +1,4 @@
-import {  Box, Pagination, Stack } from "@mui/material"
+import { Box, Pagination, Stack } from "@mui/material"
 import { ReportGmailerrorredOutlined } from "@mui/icons-material"
 import { useEffect, useState } from "react"
 import PostService from "../../service api/Post.service"
@@ -94,30 +94,32 @@ const PostPage = () => {
                         onKeyDown={textSearchHandler}
                     />
                 </Stack>
-                <Stack className="post-list">
-                    {
-                        posts.length === 0 ? (
-                            <Stack className="empty-post">
-                                <ReportGmailerrorredOutlined />
-                                <Box>There is no post!</Box>
-                            </Stack>
-                        ) :
-                            posts.map((post: Post, index: number) => (
-                                <PostCard
-                                    post={post}
-                                    key={index}
-                                    toggleCommentModal={toggleCommentModal}
-                                    likeTargetPostHandler={likeTargetPostHandler}
-                                />
-                            ))}
-                    <Comments
-                        likeTargetPostHandler={likeTargetPostHandler}
-                        openComment={openModal}
-                        toggleCommentModal={openCommentModal}
-                        targetPost={targetPost}
-                        comments={comments}
-                        setRebuildComments={setRebuildComments}
-                    />
+                <Stack className="post-list-wrapper">
+                    <Stack className="post-list">
+                        {
+                            posts.length === 0 ? (
+                                <Stack className="empty-post">
+                                    <ReportGmailerrorredOutlined />
+                                    <Box>There is no post!</Box>
+                                </Stack>
+                            ) :
+                                posts.map((post: Post, index: number) => (
+                                    <PostCard
+                                        post={post}
+                                        key={index}
+                                        toggleCommentModal={toggleCommentModal}
+                                        likeTargetPostHandler={likeTargetPostHandler}
+                                    />
+                                ))}
+                        <Comments
+                            likeTargetPostHandler={likeTargetPostHandler}
+                            openComment={openModal}
+                            toggleCommentModal={openCommentModal}
+                            targetPost={targetPost}
+                            comments={comments}
+                            setRebuildComments={setRebuildComments}
+                        />
+                    </Stack>
                 </Stack>
                 <Stack>
                     {
