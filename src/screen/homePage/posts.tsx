@@ -1,5 +1,5 @@
 import { FavoriteOutlined, QuestionAnswerOutlined, ReportGmailerrorredOutlined } from "@mui/icons-material"
-import { Accordion, AccordionDetails, AccordionSummary, Avatar, Box, Button, Pagination, Stack } from "@mui/material"
+import { Accordion, AccordionDetails, AccordionSummary, Avatar, Box, Button, CircularProgress, Pagination, Stack } from "@mui/material"
 import { useEffect, useState } from "react"
 import { Post, Posts as PostList, PostsInquiry } from "../../libs/types/post"
 import PostService from "../../service api/Post.service"
@@ -31,6 +31,7 @@ const Posts = (props: any) => {
         search: {}
     })
     const { rebuild, member, setRebuild } = useGlobal()
+    const [loading, setLoading] = useState(true)
     const [rebuildPosts, setRebuildPosts] = useState(new Date())
 
     useEffect(() => {
@@ -40,6 +41,8 @@ const Posts = (props: any) => {
             setTotalPost(posts.metaCounter[0]?.total ?? 0)
         }).catch(err => {
             sweetErrorHandling(err).then()
+        }).finally(()=>{
+            setLoading(false)
         })
     }, [rebuild, rebuildComments, rebuildPosts])
 
@@ -113,7 +116,11 @@ const Posts = (props: any) => {
     return (
         <Stack className="posts">
             {
-                posts.length === 0 ?
+                loading ? (
+                    <Stack className="empty-post">
+                        <CircularProgress/>
+                    </Stack>
+                ) : posts.length === 0 ?
                     (
                         <Stack className="empty-post">
                             <ReportGmailerrorredOutlined />

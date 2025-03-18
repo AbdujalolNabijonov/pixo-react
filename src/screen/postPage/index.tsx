@@ -1,4 +1,4 @@
-import { Box, Pagination, Stack } from "@mui/material"
+import { Box, CircularProgress, Pagination, Stack } from "@mui/material"
 import { ReportGmailerrorredOutlined } from "@mui/icons-material"
 import { useEffect, useState } from "react"
 import PostService from "../../service api/Post.service"
@@ -26,7 +26,9 @@ const PostPage = () => {
     const [targetPost, setTargetPost] = useState<Post | null>(null)
     const [openModal, setOpenModal] = useState<boolean>(false)
     const [rebuildComments, setRebuildComments] = useState(new Date())
-    const member = localStorage.getItem("member") ? JSON.parse(localStorage.getItem("member") as string) : null
+    const member = localStorage.getItem("member") ? JSON.parse(localStorage.getItem("member") as string) : null;
+    const [loading, setLoading] = useState(true)
+
     useEffect(() => {
         const postService = new PostService()
         postService.getPosts(searchObj).then((posts: Posts) => {
@@ -34,6 +36,8 @@ const PostPage = () => {
             setTotalPost(posts.metaCounter[0]?.total ?? 0)
         }).catch(err => {
             sweetErrorHandling(err).then()
+        }).finally(() => {
+            setLoading(false)
         })
     }, [searchObj, rebuild, rebuildComments])
 
@@ -97,7 +101,11 @@ const PostPage = () => {
                 <Stack className="post-list-wrapper">
                     <Stack className="post-list">
                         {
-                            posts.length === 0 ? (
+                            loading ? (
+                                <Stack className="empty-post">
+                                    <CircularProgress />
+                                </Stack>
+                            ) : posts.length === 0 ? (
                                 <Stack className="empty-post">
                                     <ReportGmailerrorredOutlined />
                                     <Box>There is no post!</Box>

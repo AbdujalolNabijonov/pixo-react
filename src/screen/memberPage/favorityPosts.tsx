@@ -1,4 +1,4 @@
-import { Box, Pagination, Stack } from "@mui/material"
+import { Box, CircularProgress, Pagination, Stack } from "@mui/material"
 import { Post, Posts, PostsInquiry } from "../../libs/types/post"
 import PostService from "../../service api/Post.service"
 import { useEffect, useState } from "react"
@@ -21,6 +21,7 @@ const FavorityPosts = () => {
     const [targetPost, setTargetPost] = useState<Post | null>(null)
     const [openModal, setOpenModal] = useState<boolean>(false)
     const [rebuildComments, setRebuildComments] = useState<Date>(new Date())
+    const [loading, setLoading] = useState(true)
     const [searchObj, setSearchObj] = useState<PostsInquiry>({
         page: 1,
         limit: 9,
@@ -36,6 +37,8 @@ const FavorityPosts = () => {
             setTotalPost(posts.metaCounter[0]?.total ?? 0)
         }).catch((err: any) => {
             sweetErrorHandling(err).then()
+        }).finally(()=>{
+            setLoading(false)
         })
     }, [searchObj, router, rebuildPost])
 
@@ -111,7 +114,11 @@ const FavorityPosts = () => {
                 setRebuildComments={setRebuildComments}
             />
             {
-                posts.length !== 0 ? (
+                loading ? (
+                    <Stack className="empty-post">
+                        <CircularProgress />
+                    </Stack>
+                ) : posts.length !== 0 ? (
                     <Pagination
                         className="pagination"
                         count={Math.ceil(totalPost / searchObj.limit)}

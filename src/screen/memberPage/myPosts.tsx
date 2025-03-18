@@ -1,15 +1,16 @@
-import { Box, Pagination, Stack } from "@mui/material"
+import { Box, CircularProgress, Pagination, Stack } from "@mui/material"
 import { Post, Posts, PostsInquiry } from "../../libs/types/post"
 import PostService from "../../service api/Post.service"
 import { useEffect, useState } from "react"
 import { sweetErrorHandling } from "../../libs/sweetAlert"
 import { Message } from "../../libs/Message"
 import CommentService from "../../service api/Comment.service"
-import PostCard from "../../components/others/postCard"
 import { ReportGmailerrorredOutlined } from "@mui/icons-material"
 import Comments from "../../components/others/comments"
 import { useParams } from "react-router-dom"
 import { Comment } from "../../libs/types/comment"
+import MyPost from "../../components/others/myPost"
+import PostCard from "../../components/others/postCard"
 
 const MyPosts = () => {
     const member = localStorage.getItem("member") ? JSON.parse(localStorage.getItem("member") as string) : null
@@ -30,6 +31,7 @@ const MyPosts = () => {
             memberId: router.id ? router.id : member?._id
         }
     })
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         const postService = new PostService()
@@ -38,6 +40,8 @@ const MyPosts = () => {
             setTotalPost(posts.metaCounter[0]?.total ?? 0)
         }).catch(err => {
             sweetErrorHandling(err).then()
+        }).finally(() => {
+            setLoading(false)
         })
     }, [searchObj, router, rebuildPost])
 
@@ -89,14 +93,31 @@ const MyPosts = () => {
         <Stack>
             <Stack className="posts">
                 {
-                    posts.length > 0 ? posts.map((post: Post, index: number) => (
-                        <PostCard
-                            post={post}
-                            toggleCommentModal={toggleCommentModal}
-                            key={index}
-                            likeTargetPostHandler={likeTargetPostHandler}
-                        />
-                    )) : (
+                    loading ? (
+                        <Stack className="empty-post">
+                            <CircularProgress />
+                        </Stack>
+                    ) : posts.length > 0 ? posts.map((post: Post, index: number) => {
+                        if (!router.id) {
+                            return (
+                                <MyPost
+                                    post={post}
+                                    toggleCommentModal={toggleCommentModal}
+                                    key={index}
+                                    likeTargetPostHandler={likeTargetPostHandler}
+                                />
+                            )
+                        } else {
+                            return (
+                                <PostCard
+                                    post={post}
+                                    toggleCommentModal={toggleCommentModal}
+                                    key={index}
+                                    likeTargetPostHandler={likeTargetPostHandler}
+                                />
+                            )
+                        }
+                    }) : (
                         <Stack className="empty-post">
                             <ReportGmailerrorredOutlined />
                             <Box>There is no post!</Box>

@@ -69,6 +69,19 @@ class PostService {
             throw err.response.data
         }
     }
+
+    public async deleteTargetPost(postId: string): Promise<Post> {
+        try {
+            const url = `${this.serverApi}/post/delete/${postId}`
+            const response = await axios.post(url, null, {
+                withCredentials: true
+            })
+            return response.data.value
+        } catch (err: any) {
+            console.log(`Error: deleteTargetPost, ${err.response.data.message}`)
+            throw err.response.data
+        }
+    }
 }
 
 export default PostService

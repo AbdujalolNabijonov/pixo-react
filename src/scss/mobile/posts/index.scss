@@ -60,10 +60,15 @@
           flex-direction: row;
           gap: 5px;
           align-items: center;
-          font-size: 10px;
-          svg {
-            font-size: 20px;
+          font-size: 12px;
+          svg{
+            font-size: 18px;
           }
+        }
+      }
+      .menu-btn{
+        svg{
+          color: white;
         }
       }
     }

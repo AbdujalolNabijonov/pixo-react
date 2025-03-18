@@ -9,6 +9,7 @@ import { Message } from "../../libs/Message"
 import PostService from "../../service api/Post.service"
 import useGlobal from "../../libs/hooks/useGlobal"
 import useDeviceDetect from "../../libs/hooks/useDeviceDetect"
+import { useNavigate } from "react-router-dom"
 
 
 const CreatePost = (props: any) => {
@@ -19,12 +20,15 @@ const CreatePost = (props: any) => {
     const [postTitle, setPostTitle] = useState("")
     const [postContent, setPostContent] = useState("")
     const { member, setRebuild } = useGlobal()
+    const [disableBtn, setDisableBtn] = useState(false)
     const device = useDeviceDetect()
+    const navigate = useNavigate()
 
 
     const createRequestHandler = async () => {
         try {
             if (!member?._id) throw new Error(Message.AUTHENTICATE_FIRST)
+            setDisableBtn(true)
             if (files.length < 1) throw new Error(Message.IMAGE_LIMIT)
             const postService = new PostService()
             const formData = new FormData();
@@ -41,6 +45,7 @@ const CreatePost = (props: any) => {
             modalCloseHandler()
             await sweetTopSmallSuccessAlert(Message.POST_CREATED)
             setRebuild(new Date())
+            navigate("/posts")
         } catch (err: any) {
             modalCloseHandler()
             await sweetErrorHandling(err)
@@ -102,7 +107,7 @@ const CreatePost = (props: any) => {
                             ))
                         }
                     </Stack>
-                    <Button variant="contained" color="warning" onClick={createRequestHandler}>Create</Button>
+                    <Button variant="contained" color="warning" onClick={createRequestHandler} disabled={disableBtn}>Create</Button>
                 </Stack>
             </Modal>
         </Stack>

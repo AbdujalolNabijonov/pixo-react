@@ -46,7 +46,7 @@ const MemberPage = () => {
             <Stack className="container">
                 <Stack className="member-data">
                     <Box className="member-image">
-                        <img src={member.memberImage ?? "/imgs/default-user.jpg"} alt="member-image" />
+                        <img src={member?.memberImage ?? "/imgs/default-user.jpg"} alt="member-image" />
                     </Box>
                     <Stack className="member-info">
                         <Box className="member-name">{member?.memberNick}</Box>
