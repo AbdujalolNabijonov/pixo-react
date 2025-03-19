@@ -41,10 +41,12 @@ const Posts = (props: any) => {
             setTotalPost(posts.metaCounter[0]?.total ?? 0)
         }).catch(err => {
             sweetErrorHandling(err).then()
-        }).finally(()=>{
+        }).finally(() => {
             setLoading(false)
         })
-    }, [rebuild, rebuildComments, rebuildPosts])
+
+        window.scrollTo(0, 0)
+    }, [rebuild, rebuildComments, rebuildPosts, searchObj])
 
     useEffect(() => {
         if (targetPost?._id) {
@@ -118,7 +120,7 @@ const Posts = (props: any) => {
             {
                 loading ? (
                     <Stack className="empty-post">
-                        <CircularProgress/>
+                        <CircularProgress />
                     </Stack>
                 ) : posts.length === 0 ?
                     (

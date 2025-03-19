@@ -71,11 +71,10 @@ const ChatMenu = () => {
             </Stack>
             <Stack className="chat-body">
                 {
-                    messages.map((message: NewMessage) => {
+                    messages.map((message: NewMessage, index: number) => {
                         if (message.memberData?._id !== member?._id) {
-                            console.log(message.memberData?.memberImage)
                             return (
-                                <Stack className="msg-left msg">
+                                <Stack className="msg-left msg" key={index}>
                                     <Avatar src={message.memberData?.memberImage ?? "/imgs/default-user.jpg"} />
                                     <Stack className="msg-body">
                                         <Box className="member-name">{message.memberData?.memberNick ?? "GUEST"}</Box>
@@ -86,7 +85,7 @@ const ChatMenu = () => {
                             )
                         } else {
                             return (
-                                <Stack className="msg-right msg">
+                                <Stack className="msg-right msg" key={index}>
                                     <Stack className="msg-body">
                                         <Box className="member-name">{message.memberData?.memberNick ?? "GUEST"}</Box>
                                         <Box className="msg-content">{message.message}</Box>

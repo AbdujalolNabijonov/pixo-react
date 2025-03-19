@@ -10,7 +10,7 @@
     background-color: white;
     box-shadow: 0 0 5px white;
     border-radius: 10px;
-    overflow: hidden;
+    overflow-y: hidden;
     .post-image {
       height: 100%;
       flex: 1;
@@ -53,13 +53,22 @@
       background-color: black;
       padding: 10px;
       height: 100%;
+      width: 50%;
       justify-content: space-between;
-      .member-info {
+      .comment-head {
+        .member-info {
+          flex-direction: row;
+          gap: 10px;
+          align-items: center;
+          margin-bottom: 10px;
+          font-weight: 600;
+        }
         flex-direction: row;
-        gap: 10px;
+        justify-content: space-between;
         align-items: center;
-        margin-bottom: 10px;
-        font-weight: 600;
+        svg{
+          color: white;
+        }
       }
       .post-info {
         margin: 10px 0;
@@ -109,7 +118,12 @@
             }
           }
           .comment-content {
+            width: 98%;
             font-size: 12px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            word-break: break-word;
+            border-bottom: 1px solid rgb(137, 134, 134);
           }
         }
         .post-stat {

@@ -1,5 +1,5 @@
-import { AddReactionOutlined, FavoriteOutlined, QuestionAnswer, ReportGmailerrorredOutlined, Send } from "@mui/icons-material"
-import { Avatar, Box, Divider, IconButton, Menu, Modal, Stack } from "@mui/material"
+import { AddReactionOutlined, FavoriteOutlined, QuestionAnswer, ReportGmailerrorredOutlined, Send, X } from "@mui/icons-material"
+import { Avatar, Box, Divider, IconButton, Menu, Modal, Stack, ToggleButton } from "@mui/material"
 import EmojiPicker from 'emoji-picker-react'
 import { useState } from "react"
 import { Post } from "../../libs/types/post"
@@ -34,7 +34,7 @@ const Comments = (props: CommentsInterface) => {
     const [comment, setComment] = useState("")
     const { member } = useGlobal()
     const device = useDeviceDetect()
-    const [disableBtn,setDisableBtn]=useState(false)
+    const [disableBtn, setDisableBtn] = useState(false)
 
     const submitCommentRequest = async () => {
         try {
@@ -43,13 +43,12 @@ const Comments = (props: CommentsInterface) => {
             setDisableBtn(true)
             const commentService = new CommentService()
             await commentService.createComment({ commentContent: comment, commentTargetId: targetPost?._id as string });
-            await sweetTopSmallSuccessAlert("Successfully commented!")
             setRebuildComments(new Date())
             setComment("")
         } catch (err: any) {
             toggleCommentModal()
             await sweetErrorHandling(err)
-        } finally{
+        } finally {
             setDisableBtn(false)
         }
     }
@@ -84,8 +83,8 @@ const Comments = (props: CommentsInterface) => {
                             className="comment-swiper"
                         >
                             {
-                                targetPost?.postImages.map((image: string) => (
-                                    <SwiperSlide className="comment-slide">
+                                targetPost?.postImages.map((image: string, index: number) => (
+                                    <SwiperSlide className="comment-slide" key={index}>
                                         <img src={image} alt="post-image" />
                                     </SwiperSlide>
                                 ))
@@ -93,11 +92,15 @@ const Comments = (props: CommentsInterface) => {
                         </Swiper>
                     </Box>
                     <Stack className="comments">
-                        <Stack className="member-info">
-                            <Avatar src={targetPost?.memberData?.memberImage ? targetPost.memberData.memberImage : "/imgs/default-user.jpg"} />
-                            <Box>{targetPost?.memberData?.memberNick}</Box>
+                        <Stack className="comment-head">
+                            <Stack className="member-info">
+                                <Avatar src={targetPost?.memberData?.memberImage ? targetPost.memberData.memberImage : "/imgs/default-user.jpg"} />
+                                <Box>{targetPost?.memberData?.memberNick}</Box>
+                            </Stack>
+                            <ToggleButton value="left" onClick={toggleCommentModal}>
+                                <X/>
+                            </ToggleButton>
                         </Stack>
-                        <Divider sx={{ borderColor: "white" }} />
                         {
                             targetPost?.postContent || targetPost?.postTitle ? (
                                 <Stack className="post-info">
@@ -150,7 +153,7 @@ const Comments = (props: CommentsInterface) => {
                                 <Box>{targetPost?.postComments}</Box>
                             </Stack>
                         </Stack>
-                        <Box className="post-time">{moment(targetPost?.createdAt).format("DD MMMM, YYYY")}</Box>
+                        <Box className="post-time">{moment(targetPost?.createdAt).format("DD MMMM YYYY, hh:mm")}</Box>
                         <Divider sx={{ borderColor: "white" }} />
                         <Stack className="post-input">
                             <IconButton className="add-react" onClick={toggleOpenEmoji}><AddReactionOutlined /></IconButton>
@@ -161,7 +164,11 @@ const Comments = (props: CommentsInterface) => {
                             >
                                 <EmojiPicker onEmojiClick={pickEmojiHandler} />
                             </Menu>
-                            <input type="text" placeholder="Leave a comment ..." value={comment} onChange={commentHandler} />
+                            <input type="text" placeholder="Leave a comment ..." value={comment} onChange={commentHandler} onKeyDown={(e: any) => {
+                                if (e.key === "Enter") {
+                                    submitCommentRequest()
+                                }
+                            }} />
                             <IconButton className="send-post" onClick={submitCommentRequest} disabled={disableBtn}><Send /></IconButton>
                         </Stack>
                     </Stack>
