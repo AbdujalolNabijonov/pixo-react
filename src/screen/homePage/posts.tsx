@@ -13,6 +13,7 @@ import { Comment } from "../../libs/types/comment"
 import CommentService from "../../service api/Comment.service"
 import { Message } from "../../libs/Message"
 import { useNavigate } from "react-router-dom"
+import { useQuery } from "@tanstack/react-query"
 
 const Posts = (props: any) => {
     const navigate = useNavigate()
@@ -25,7 +26,7 @@ const Posts = (props: any) => {
     const [rebuildComments, setRebuildComments] = useState(new Date())
     const [searchObj, setSearchObj] = useState<PostsInquiry>({
         page: 1,
-        limit: 10,
+        limit: 1,
         order: 'createdAt',
         direction: -1,
         search: {}
@@ -34,19 +35,40 @@ const Posts = (props: any) => {
     const [loading, setLoading] = useState(true)
     const [rebuildPosts, setRebuildPosts] = useState(new Date())
 
+    const fetchPosts = async (searchObj: PostsInquiry) => {
+        try {
+            const postService = new PostService();
+            const data = await postService.getPosts(searchObj)
+            return data
+        } catch (err: any) {
+            await sweetErrorHandling(err)
+        }
+    }
+    const { isLoading, refetch, dataUpdatedAt } = useQuery(
+        ["posts", searchObj.page],
+        () => fetchPosts(searchObj),
+        {
+            enabled: Boolean(searchObj),
+            onSuccess: (data: PostList) => {
+                setPosts(data.list)
+                setTotalPost(data.metaCounter[0]?.total ?? 0)
+            },
+            onError: async (err: any) => {
+                await sweetErrorHandling(err)
+            }
+        }
+    )
     useEffect(() => {
-        const postService = new PostService();
-        postService.getPosts(searchObj).then((posts: PostList) => {
-            setPosts(posts.list)
-            setTotalPost(posts.metaCounter[0]?.total ?? 0)
-        }).catch(err => {
-            sweetErrorHandling(err).then()
-        }).finally(() => {
-            setLoading(false)
-        })
-
+        refetch()
         window.scrollTo(0, 0)
     }, [rebuild, rebuildComments, rebuildPosts, searchObj])
+
+    useEffect(() => {
+        if (dataUpdatedAt) {
+            const timeSinceUpdate = Date.now() - dataUpdatedAt;
+            console.log(`Data was last updated ${timeSinceUpdate} ms ago`);
+        }
+    }, [dataUpdatedAt]);
 
     useEffect(() => {
         if (targetPost?._id) {
@@ -64,6 +86,7 @@ const Posts = (props: any) => {
             })
         }
     }, [rebuildComments])
+
 
     const paginationHandler = (e: any, page: number) => {
         searchObj.page = page;
@@ -118,11 +141,11 @@ const Posts = (props: any) => {
     return (
         <Stack className="posts">
             {
-                loading ? (
+                isLoading ? (
                     <Stack className="empty-post">
                         <CircularProgress />
                     </Stack>
-                ) : posts.length === 0 ?
+                ) : posts?.length === 0 ?
                     (
                         <Stack className="empty-post">
                             <ReportGmailerrorredOutlined />
