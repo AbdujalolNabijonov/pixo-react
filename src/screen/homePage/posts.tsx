@@ -26,7 +26,7 @@ const Posts = (props: any) => {
     const [rebuildComments, setRebuildComments] = useState(new Date())
     const [searchObj, setSearchObj] = useState<PostsInquiry>({
         page: 1,
-        limit: 1,
+        limit: 5,
         order: 'createdAt',
         direction: -1,
         search: {}
